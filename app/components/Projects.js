@@ -34,7 +34,7 @@ const projects = [
     name: "CoSell",
     description:
       "Collaborative selling platform that helped businesses partner, share leads, and grow together through shared networks.",
-    link: "https://cosell.saara.io/",
+    link: "#",
     tags: ["Collaboration", "Sales", "Growth"],
     sunsetted: true,
   },
@@ -44,6 +44,14 @@ const projects = [
       "AI-driven loyalty platform that used intelligent segmentation to deliver rewards that boosted engagement and retention.",
     link: "#",
     tags: ["AI", "Loyalty", "Engagement"],
+    sunsetted: true,
+  },
+  {
+    name: "EcoRefunds",
+    description:
+      "A solution that analyzes why refunds are happening and provides actionable suggestions to reduce refund rates.",
+    link: "#",
+    tags: ["Refund Analytics", "AI Insights", "Optimization"],
     sunsetted: true,
   },
 ];
