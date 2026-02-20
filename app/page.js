@@ -15,7 +15,7 @@ function JsonLd() {
         "@type": "WebSite",
         "@id": "https://www.siddharthdangarh.com/#website",
         url: "https://www.siddharthdangarh.com",
-        name: "Siddharth Dangarh — Senior Software Developer",
+        name: "Siddharth Dangarh - Senior Software Developer",
         description:
           "Portfolio of Siddharth Dangarh, a Senior Software Developer specializing in agentic AI platforms, cloud-native architecture, and scalable full-stack systems.",
         inLanguage: "en-US",
@@ -55,7 +55,7 @@ function JsonLd() {
         "@type": "WebPage",
         "@id": "https://www.siddharthdangarh.com/#webpage",
         url: "https://www.siddharthdangarh.com",
-        name: "Siddharth Dangarh — Senior Software Developer",
+        name: "Siddharth Dangarh - Senior Software Developer",
         isPartOf: {
           "@id": "https://www.siddharthdangarh.com/#website",
         },

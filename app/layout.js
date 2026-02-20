@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 
 const SITE_URL = "https://www.siddharthdangarh.com";
 const FULL_NAME = "Siddharth Dangarh";
-const TITLE = `${FULL_NAME} — Senior Software Developer`;
+const TITLE = `${FULL_NAME} - Senior Software Developer`;
 const DESCRIPTION =
   "Portfolio of Siddharth Dangarh, a Senior Software Developer in Bengaluru specializing in agentic AI platforms, cloud-native architecture (AWS, Azure), Python, Django, Next.js, and scalable full-stack systems.";
 
@@ -49,7 +49,7 @@ export const metadata = {
   },
 
   icons: {
-    icon: "/images/favicon.ico",
+    icon: "/images/portfolio-logo-icon.png",
   },
 
   openGraph: {
@@ -62,7 +62,7 @@ export const metadata = {
         url: "/images/preview.jpeg",
         width: 1200,
         height: 630,
-        alt: `${FULL_NAME} — Senior Software Developer Portfolio`,
+        alt: `${FULL_NAME} - Senior Software Developer Portfolio`,
         type: "image/jpeg",
       },
     ],

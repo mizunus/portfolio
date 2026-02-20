@@ -5,18 +5,18 @@ const experiences = [
   {
     company: "Saara Inc.",
     role: "Senior Software Developer",
-    period: "May 2023 — Present",
+    period: "May 2023 - Present",
     location: "Bengaluru",
     bullets: [
       "Led architecture and implementation of an AI platform from scratch, designing agents that handle refunds, product analysis, and quality control.",
       "Drove cloud migration across AWS and Azure with robust security practices.",
-      "Shipped flagship products including EcoShip and CoLoyalty, directly impacting business revenue.",
+      "Shipped flagship products including EcoReturns, EcoShip, and FlyOS; in FlyOS, I helped build agentic AI chat with tools and artifacts, plus AI widget and workflow builders.",
     ],
   },
   {
     company: "Saara Inc.",
     role: "Software Developer",
-    period: "Jul 2022 — Apr 2023",
+    period: "Jul 2022 - Apr 2023",
     location: "Bengaluru",
     bullets: [
       "Built a ChatGPT-powered returns/exchange chatbot, modernizing legacy customer service flows.",

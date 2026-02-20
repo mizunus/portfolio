@@ -45,7 +45,7 @@ export default function About() {
               possibilities.
             </p>
             <p>
-              Every project is a new adventure&mdash;a chance to learn, create,
+              Every project is a new adventure - a chance to learn, create,
               and make an impact.
             </p>
           </div>

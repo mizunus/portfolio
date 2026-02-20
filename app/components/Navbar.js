@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import Link from "next/link";
 
 const navLinks = [
@@ -35,10 +36,17 @@ export default function Navbar() {
       >
         <Link
           href="/"
-          aria-label="Siddharth Dangarh — Home"
+          aria-label="Siddharth Dangarh - Home"
           className="text-lg font-semibold text-white tracking-tight"
         >
-          SD<span className="text-indigo-400">.</span>
+          <Image
+            src="/images/portfolio-logo-icon.png"
+            alt="Siddharth Dangarh logo"
+            width={36}
+            height={36}
+            priority
+            className="h-9 w-9 rounded-md"
+          />
         </Link>
 
         <div className="hidden md:flex items-center gap-8">
