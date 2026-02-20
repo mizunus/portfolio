@@ -11,7 +11,12 @@ export default function About() {
   const [ref, inView] = useInView();
 
   return (
-    <section id="about" className="py-24 px-6 scroll-mt-24" ref={ref}>
+    <section
+      id="about"
+      aria-label="About Siddharth Dangarh"
+      className="py-24 px-6 scroll-mt-24"
+      ref={ref}
+    >
       <div
         className={`max-w-6xl mx-auto transition-all duration-700 ease-out ${
           inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
@@ -45,10 +50,11 @@ export default function About() {
             </p>
           </div>
 
-          <div className="flex md:flex-col gap-4">
+          <div className="flex md:flex-col gap-4" role="list" aria-label="Key highlights">
             {highlights.map((item) => (
               <div
                 key={item.label}
+                role="listitem"
                 className="px-6 py-5 rounded-xl bg-white/[0.03] border border-white/[0.06] text-center min-w-[140px]"
               >
                 <div className="text-2xl font-bold text-white mb-1">

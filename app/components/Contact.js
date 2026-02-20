@@ -5,7 +5,12 @@ export default function Contact() {
   const [ref, inView] = useInView();
 
   return (
-    <section id="contact" className="py-24 px-6 scroll-mt-24" ref={ref}>
+    <section
+      id="contact"
+      aria-label="Contact information"
+      className="py-24 px-6 scroll-mt-24"
+      ref={ref}
+    >
       <div
         className={`max-w-2xl mx-auto text-center transition-all duration-700 ease-out ${
           inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
@@ -32,6 +37,7 @@ export default function Contact() {
             viewBox="0 0 24 24"
             stroke="currentColor"
             strokeWidth={1.5}
+            aria-hidden="true"
           >
             <path
               strokeLinecap="round"
@@ -46,7 +52,7 @@ export default function Contact() {
           <a
             href="https://in.linkedin.com/in/siddharth-dangarh-a896b61a7"
             target="_blank"
-            rel="noopener noreferrer"
+            rel="me noopener noreferrer"
             className="text-slate-500 hover:text-indigo-400 transition-colors duration-200"
           >
             LinkedIn

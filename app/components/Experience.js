@@ -30,7 +30,12 @@ export default function Experience() {
   const [ref, inView] = useInView();
 
   return (
-    <section id="experience" className="py-24 px-6 scroll-mt-24" ref={ref}>
+    <section
+      id="experience"
+      aria-label="Work experience"
+      className="py-24 px-6 scroll-mt-24"
+      ref={ref}
+    >
       <div
         className={`max-w-6xl mx-auto transition-all duration-700 ease-out ${
           inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
@@ -45,7 +50,7 @@ export default function Experience() {
 
         <div className="space-y-12">
           {experiences.map((exp, idx) => (
-            <div
+            <article
               key={idx}
               className="group relative pl-8 border-l-2 border-white/[0.06] hover:border-indigo-500/50 transition-colors duration-300"
             >
@@ -58,9 +63,9 @@ export default function Experience() {
                     @ {exp.company}
                   </span>
                 </h3>
-                <span className="text-sm font-mono text-slate-500 shrink-0">
+                <time className="text-sm font-mono text-slate-500 shrink-0">
                   {exp.period}
-                </span>
+                </time>
               </div>
 
               <p className="text-sm text-slate-500 mb-4">{exp.location}</p>
@@ -71,12 +76,14 @@ export default function Experience() {
                     key={i}
                     className="text-slate-400 leading-relaxed flex gap-3"
                   >
-                    <span className="text-indigo-400/50 mt-1 shrink-0">▹</span>
+                    <span className="text-indigo-400/50 mt-1 shrink-0" aria-hidden="true">
+                      ▹
+                    </span>
                     <span>{item}</span>
                   </li>
                 ))}
               </ul>
-            </div>
+            </article>
           ))}
         </div>
       </div>

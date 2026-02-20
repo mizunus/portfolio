@@ -6,7 +6,10 @@ export default function Hero() {
   useEffect(() => setMounted(true), []);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden">
+    <section
+      aria-label="Introduction"
+      className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden"
+    >
       <div className="absolute top-1/4 -left-40 w-[500px] h-[500px] bg-indigo-500/15 rounded-full blur-[140px] pointer-events-none" />
       <div className="absolute bottom-1/4 -right-40 w-[400px] h-[400px] bg-violet-500/10 rounded-full blur-[140px] pointer-events-none" />
 
@@ -25,7 +28,7 @@ export default function Hero() {
         <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold text-white leading-[1.05] mb-6 tracking-tight">
           Hi, I&apos;m{" "}
           <span className="bg-gradient-to-r from-indigo-400 via-violet-400 to-purple-400 bg-clip-text text-transparent">
-            Siddharth
+            Siddharth Dangarh
           </span>
         </h1>
 
@@ -51,7 +54,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce" aria-hidden="true">
         <svg
           className="w-5 h-5 text-slate-600"
           fill="none"

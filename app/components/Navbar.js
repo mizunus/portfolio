@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 const navLinks = [
   { label: "About", href: "#about" },
@@ -20,20 +21,25 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav
+    <header
+      role="banner"
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
           ? "bg-[#0a0a0f]/80 backdrop-blur-xl border-b border-white/[0.06]"
           : ""
       }`}
     >
-      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        <a
-          href="#"
+      <nav
+        aria-label="Primary navigation"
+        className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between"
+      >
+        <Link
+          href="/"
+          aria-label="Siddharth Dangarh — Home"
           className="text-lg font-semibold text-white tracking-tight"
         >
           SD<span className="text-indigo-400">.</span>
-        </a>
+        </Link>
 
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
@@ -50,7 +56,8 @@ export default function Navbar() {
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
           className="md:hidden text-slate-400 hover:text-white transition-colors"
-          aria-label="Toggle menu"
+          aria-label={mobileOpen ? "Close menu" : "Open menu"}
+          aria-expanded={mobileOpen}
         >
           <svg
             className="w-6 h-6"
@@ -75,11 +82,11 @@ export default function Navbar() {
             )}
           </svg>
         </button>
-      </div>
+      </nav>
 
       {mobileOpen && (
         <div className="md:hidden bg-[#0a0a0f]/95 backdrop-blur-xl border-b border-white/[0.06]">
-          <div className="px-6 py-4 flex flex-col gap-4">
+          <nav aria-label="Mobile navigation" className="px-6 py-4 flex flex-col gap-4">
             {navLinks.map((link) => (
               <a
                 key={link.href}
@@ -90,9 +97,9 @@ export default function Navbar() {
                 {link.label}
               </a>
             ))}
-          </div>
+          </nav>
         </div>
       )}
-    </nav>
+    </header>
   );
 }

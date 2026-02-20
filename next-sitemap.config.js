@@ -1,6 +1,16 @@
+/** @type {import('next-sitemap').IConfig} */
 module.exports = {
-    siteUrl: 'https://portfolio.siddharthdangarh.com',
-    generateRobotsTxt: true,
-    trailingSlash: true,
+  siteUrl: "https://www.siddharthdangarh.com",
+  generateRobotsTxt: true,
+  trailingSlash: true,
+  changefreq: "monthly",
+  priority: 1.0,
+  robotsTxtOptions: {
+    policies: [
+      {
+        userAgent: "*",
+        allow: "/",
+      },
+    ],
+  },
 };
-  

@@ -11,49 +11,72 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const SITE_URL = "https://www.siddharthdangarh.com";
+const FULL_NAME = "Siddharth Dangarh";
+const TITLE = `${FULL_NAME} — Senior Software Developer`;
+const DESCRIPTION =
+  "Portfolio of Siddharth Dangarh, a Senior Software Developer in Bengaluru specializing in agentic AI platforms, cloud-native architecture (AWS, Azure), Python, Django, Next.js, and scalable full-stack systems.";
+
 export const metadata = {
-  title: "Siddharth Dangarh — Senior Software Developer",
-  description:
-    "Senior Software Developer specializing in agentic AI platforms, cloud-native systems, and scalable software architecture.",
+  metadataBase: new URL(SITE_URL),
+
+  title: TITLE,
+  description: DESCRIPTION,
   keywords: [
     "Siddharth Dangarh",
-    "Software Developer",
-    "Senior Developer",
+    "Siddharth Dangarh portfolio",
+    "Senior Software Developer",
+    "Senior Software Developer Bengaluru",
     "AI Developer",
     "Full Stack Developer",
-    "React",
-    "Next.js",
-    "Python",
-    "Django",
+    "Agentic AI",
     "Cloud Architecture",
+    "Python Developer",
+    "Django Developer",
+    "Next.js Developer",
+    "React Developer",
+    "Node.js Developer",
+    "AWS",
+    "Azure",
+    "Software Architect",
   ],
-  authors: [
-    {
-      name: "Siddharth Dangarh",
-      url: "https://portfolio.siddharthdangarh.com",
-    },
-  ],
-  creator: "Siddharth Dangarh",
+  authors: [{ name: FULL_NAME, url: SITE_URL }],
+  creator: FULL_NAME,
+  publisher: FULL_NAME,
+
+  alternates: {
+    canonical: "/",
+  },
+
   icons: {
     icon: "/images/favicon.ico",
   },
+
   openGraph: {
-    title: "Siddharth Dangarh — Senior Software Developer",
-    description:
-      "Senior Software Developer specializing in agentic AI platforms, cloud-native systems, and scalable software architecture.",
-    url: "https://portfolio.siddharthdangarh.com",
-    siteName: "Siddharth Dangarh",
+    title: TITLE,
+    description: DESCRIPTION,
+    url: SITE_URL,
+    siteName: FULL_NAME,
     images: [
       {
-        url: "https://portfolio.siddharthdangarh.com/images/preview.jpeg",
+        url: "/images/preview.jpeg",
         width: 1200,
         height: 630,
-        alt: "Siddharth Dangarh Portfolio",
+        alt: `${FULL_NAME} — Senior Software Developer Portfolio`,
+        type: "image/jpeg",
       },
     ],
     locale: "en_US",
     type: "website",
   },
+
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESCRIPTION,
+    images: ["/images/preview.jpeg"],
+  },
+
   robots: {
     index: true,
     follow: true,
@@ -61,8 +84,16 @@ export const metadata = {
     googleBot: {
       index: true,
       follow: true,
-      noimageindex: false,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
+  },
+
+  other: {
+    "theme-color": "#0a0a0f",
+    "color-scheme": "dark",
+    "google-site-verification": "REPLACE_WITH_YOUR_VERIFICATION_CODE",
   },
 };
 
