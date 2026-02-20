@@ -12,43 +12,44 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Portfolio | Siddharth Dangarh",
-  description: "Siddharth Dangarh's Portfolio - Senior Software Developer & Tech Enthusiast",
+  title: "Siddharth Dangarh — Senior Software Developer",
+  description:
+    "Senior Software Developer specializing in agentic AI platforms, cloud-native systems, and scalable software architecture.",
   keywords: [
     "Siddharth Dangarh",
-    "Siddharth",
-    "Dangarh",
-    "Portfolio",
+    "Software Developer",
+    "Senior Developer",
+    "AI Developer",
     "Full Stack Developer",
-    "Web Developer",
     "React",
     "Next.js",
-    "JavaScript",
-    "Frontend",
-    "Backend",
-    "Problem Solver",
-    "Software Architect",
-    "Solutions Architect",
-    "AI Developer",
-    "AI Designer"
+    "Python",
+    "Django",
+    "Cloud Architecture",
   ],
-  authors: [{ name: "Siddharth Dangarh", url: "https://portfolio.siddharthdangarh.com" }],
+  authors: [
+    {
+      name: "Siddharth Dangarh",
+      url: "https://portfolio.siddharthdangarh.com",
+    },
+  ],
   creator: "Siddharth Dangarh",
   icons: {
     icon: "/images/favicon.ico",
   },
   openGraph: {
-    title: "Portfolio | Siddharth Dangarh",
-    description: "Explore the work and projects of Siddharth Dangarh, a passionate Software Developer.",
+    title: "Siddharth Dangarh — Senior Software Developer",
+    description:
+      "Senior Software Developer specializing in agentic AI platforms, cloud-native systems, and scalable software architecture.",
     url: "https://portfolio.siddharthdangarh.com",
-    siteName: "Siddharth Dangarh Portfolio",
+    siteName: "Siddharth Dangarh",
     images: [
       {
         url: "https://portfolio.siddharthdangarh.com/images/preview.jpeg",
         width: 1200,
         height: 630,
-        alt: "Portfolio Preview"
-      }
+        alt: "Siddharth Dangarh Portfolio",
+      },
     ],
     locale: "en_US",
     type: "website",

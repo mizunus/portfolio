@@ -1,59 +1,85 @@
-import { BriefcaseIcon } from "@heroicons/react/24/solid";
+"use client";
+import { useInView } from "../hooks/useInView";
 
 const experiences = [
   {
     company: "Saara Inc.",
     role: "Senior Software Developer",
-    period: "May 2023 - Present",
+    period: "May 2023 — Present",
     location: "Bengaluru",
-    story: (
-      <>
-        <b>Challenge:</b> Build an AI platform from scratch, capable of scaling with the business.<br />
-        <b>My Role:</b> I led the architecture and implementation, designing AI agents that now handle refunds, product analysis, and quality control—freeing up countless hours for our clients.<br />
-        <b>Impact:</b> Our team’s work enabled seamless cloud migration, robust security, and the successful launch of flagship projects like <i>EcoShip</i> and <i>CoLoyalty</i>.
-      </>
-    ),
-    color: "border-[#ff7e5f]",
+    bullets: [
+      "Led architecture and implementation of an AI platform from scratch, designing agents that handle refunds, product analysis, and quality control.",
+      "Drove cloud migration across AWS and Azure with robust security practices.",
+      "Shipped flagship products including EcoShip and CoLoyalty, directly impacting business revenue.",
+    ],
   },
   {
     company: "Saara Inc.",
     role: "Software Developer",
-    period: "July 2022 - April 2023",
+    period: "Jul 2022 — Apr 2023",
     location: "Bengaluru",
-    story: (
-      <>
-        <b>Challenge:</b> Modernize legacy systems and introduce AI-driven automation.<br />
-        <b>My Role:</b> I created a ChatGPT-powered returns/exchange chatbot, revamped old codebases, and collaborated across the full software lifecycle.<br />
-        <b>Impact:</b> Our solutions improved customer experience and set new standards for efficiency.
-      </>
-    ),
-    color: "border-[#f9d423]",
+    bullets: [
+      "Built a ChatGPT-powered returns/exchange chatbot, modernizing legacy customer service flows.",
+      "Revamped and stabilized legacy codebases, improving performance and maintainability.",
+      "Collaborated across the full software lifecycle from design to deployment.",
+    ],
   },
 ];
 
 export default function Experience() {
+  const [ref, inView] = useInView();
+
   return (
-    <section id="experience" className="w-full max-w-3xl mx-auto my-8 scroll-mt-24">
-      <div className="flex items-center gap-3 mb-6">
-        <BriefcaseIcon className="w-7 h-7 text-[#ff7e5f]" />
-        <h2 className="text-3xl font-bold text-[#1a1a1a] dark:text-[#fff7e6]">Experience</h2>
-      </div>
-      <ol className="relative border-l-4 border-[#ffe0ec] dark:border-[#f9d423]">
-        {experiences.map((exp, idx) => (
-          <li key={idx} className={`mb-12 ml-6`}>
-            <span className={`absolute -left-5 flex items-center justify-center w-10 h-10 bg-white dark:bg-[#2d1a2d] rounded-full shadow-lg ${exp.color}`}>
-              <BriefcaseIcon className="w-6 h-6 text-[#ff7e5f]" />
-            </span>
-            <div className={`bg-white/80 dark:bg-[#2d1a2d]/80 rounded-2xl p-8 shadow border-l-4 ${exp.color} backdrop-blur-md`}>
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-                <span className="font-bold text-[#1a1a1a] dark:text-[#fff7e6]">{exp.company} <span className="font-normal">| {exp.role}</span></span>
-                <span className="text-base text-[#ff7e5f] dark:text-[#f9d423]">{exp.location} | {exp.period}</span>
+    <section id="experience" className="py-24 px-6 scroll-mt-24" ref={ref}>
+      <div
+        className={`max-w-6xl mx-auto transition-all duration-700 ease-out ${
+          inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        }`}
+      >
+        <p className="text-sm font-mono text-indigo-400 mb-3 tracking-wider uppercase">
+          Experience
+        </p>
+        <h2 className="text-3xl sm:text-4xl font-bold text-white mb-12">
+          Where I&apos;ve Worked
+        </h2>
+
+        <div className="space-y-12">
+          {experiences.map((exp, idx) => (
+            <div
+              key={idx}
+              className="group relative pl-8 border-l-2 border-white/[0.06] hover:border-indigo-500/50 transition-colors duration-300"
+            >
+              <div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full border-2 border-white/[0.08] bg-[#0a0a0f] group-hover:border-indigo-400 transition-colors duration-300" />
+
+              <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-1">
+                <h3 className="text-xl font-semibold text-white">
+                  {exp.role}{" "}
+                  <span className="text-slate-500 font-normal">
+                    @ {exp.company}
+                  </span>
+                </h3>
+                <span className="text-sm font-mono text-slate-500 shrink-0">
+                  {exp.period}
+                </span>
               </div>
-              <div className="text-[#1a1a1a] dark:text-[#fff7e6] text-base pl-2">{exp.story}</div>
+
+              <p className="text-sm text-slate-500 mb-4">{exp.location}</p>
+
+              <ul className="space-y-3">
+                {exp.bullets.map((item, i) => (
+                  <li
+                    key={i}
+                    className="text-slate-400 leading-relaxed flex gap-3"
+                  >
+                    <span className="text-indigo-400/50 mt-1 shrink-0">▹</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
-          </li>
-        ))}
-      </ol>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }

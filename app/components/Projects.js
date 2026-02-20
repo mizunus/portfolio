@@ -1,79 +1,104 @@
-import Tilt from "react-parallax-tilt";
-import { RocketLaunchIcon } from "@heroicons/react/24/solid";
+"use client";
+import { useInView } from "../hooks/useInView";
 
 const projects = [
   {
     name: "EcoReturns",
-    description: "A returns management solution I work on daily—streamlining, automating, and optimizing the returns process for e-commerce brands.",
+    description:
+      "Returns management platform that streamlines, automates, and optimizes the returns process for e-commerce brands.",
     link: "https://returns.saara.io/",
-    image: "/vercel.svg",
-    type: "Company",
+    tags: ["SaaS", "E-commerce", "Automation"],
   },
   {
     name: "EcoShip",
-    description: "Shipping logistics are a mess—so I built EcoShip, a platform that uses AI to optimize routes and cut emissions. It’s now helping businesses save money and the planet.",
+    description:
+      "AI-powered shipping logistics platform that optimizes routes and reduces emissions, helping businesses save money and the planet.",
     link: "https://ecoship.saara.io/",
-    image: "/vercel.svg",
-    type: "Company",
+    tags: ["AI", "Logistics", "GreenTech"],
   },
   {
     name: "SaaraAI",
-    description: "An agentic AI-based platform powering automation, analytics, and intelligent decision-making for modern businesses.",
+    description:
+      "Agentic AI platform powering automation, analytics, and intelligent decision-making for modern businesses.",
     link: "https://agents.saara.ai/",
-    image: "/vercel.svg",
-    type: "Company",
+    tags: ["AI Agents", "Platform", "Analytics"],
   },
   {
     name: "CoSell",
-    description: "A collaborative selling platform designed to help businesses partner, share leads, and grow together.",
+    description:
+      "Collaborative selling platform designed to help businesses partner, share leads, and grow together.",
     link: "https://cosell.saara.io/",
-    image: "/vercel.svg",
-    type: "Company",
+    tags: ["Collaboration", "Sales", "Growth"],
   },
   {
     name: "CoLoyalty",
-    description: "Customer loyalty is more than points. CoLoyalty uses AI-driven segmentation to deliver rewards that matter, boosting engagement and retention.",
+    description:
+      "AI-driven loyalty platform that uses intelligent segmentation to deliver rewards that boost engagement and retention.",
     link: "#",
-    image: "/vercel.svg",
-    type: "Company",
+    tags: ["AI", "Loyalty", "Engagement"],
   },
 ];
 
 export default function Projects() {
+  const [ref, inView] = useInView();
+
   return (
-    <section id="projects" className="scroll-mt-24 w-full max-w-3xl mx-auto my-8 px-4 sm:px-6">
-      <div className="flex items-center gap-3 mb-6">
-        <RocketLaunchIcon className="w-7 h-7 text-[#f9d423]" />
-        <h2 className="text-3xl font-bold text-[#1a1a1a] dark:text-[#fff7e6]">Featured Projects</h2>
-      </div>
-      <p className="mb-6 text-lg text-[#1a1a1a] dark:text-[#fff7e6]">
-        Here are a few projects where I’ve turned vision into reality:
-      </p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
-        {projects.map((project, idx) => (
-          <Tilt
-            key={idx}
-            glareEnable={true}
-            glareMaxOpacity={0.15}
-            scale={1.04}
-            transitionSpeed={1200}
-            tiltMaxAngleX={12}
-            tiltMaxAngleY={12}
-            className="rounded-2xl"
-          >
+    <section id="projects" className="py-24 px-6 scroll-mt-24" ref={ref}>
+      <div
+        className={`max-w-6xl mx-auto transition-all duration-700 ease-out ${
+          inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        }`}
+      >
+        <p className="text-sm font-mono text-indigo-400 mb-3 tracking-wider uppercase">
+          Projects
+        </p>
+        <h2 className="text-3xl sm:text-4xl font-bold text-white mb-12">
+          Things I&apos;ve Built
+        </h2>
+
+        <div className="grid sm:grid-cols-2 gap-6">
+          {projects.map((project, idx) => (
             <a
+              key={idx}
               href={project.link}
-              className="group bg-white/80 dark:bg-[#2d1a2d]/80 rounded-2xl shadow-xl p-8 flex flex-col items-center hover:scale-105 transition-transform border border-[#ffe0ec] dark:border-[#f9d423] backdrop-blur-md relative"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group p-6 rounded-xl bg-white/[0.02] border border-white/[0.06] hover:border-indigo-500/30 transition-all duration-300 hover:bg-white/[0.04]"
             >
-              <span className="absolute top-4 right-4 bg-[#ff7e5f] text-white text-xs font-bold px-3 py-1 rounded-full shadow">
-                {project.type === "Company" ? "Company Project" : "Personal Project"}
-              </span>
-              <img src={project.image} alt={project.name} className="w-16 h-16 mb-4 rounded-lg shadow" />
-              <h3 className="text-xl font-semibold text-[#ff7e5f] dark:text-[#f9d423] mb-2">{project.name}</h3>
-              <p className="text-base text-[#1a1a1a] dark:text-[#fff7e6] text-center">{project.description}</p>
+              <div className="flex items-start justify-between mb-3">
+                <h3 className="text-xl font-semibold text-white group-hover:text-indigo-400 transition-colors duration-200">
+                  {project.name}
+                </h3>
+                <svg
+                  className="w-5 h-5 text-slate-600 group-hover:text-indigo-400 transition-all duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 shrink-0 mt-1"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={1.5}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"
+                  />
+                </svg>
+              </div>
+              <p className="text-slate-400 text-sm leading-relaxed mb-4">
+                {project.description}
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {project.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="text-xs font-mono text-slate-500 px-2.5 py-1 bg-white/[0.03] rounded border border-white/[0.04]"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
             </a>
-          </Tilt>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );

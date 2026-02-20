@@ -1,21 +1,66 @@
-import { UserCircleIcon } from "@heroicons/react/24/solid";
+"use client";
+import { useInView } from "../hooks/useInView";
+
+const highlights = [
+  { label: "Years Experience", value: "3+" },
+  { label: "Projects Shipped", value: "10+" },
+  { label: "Location", value: "Bengaluru" },
+];
 
 export default function About() {
+  const [ref, inView] = useInView();
+
   return (
-    <section id="about" className="w-full max-w-3xl mx-auto bg-white/80 dark:bg-[#2d1a2d]/80 rounded-3xl shadow-2xl p-12 my-8 border border-[#ffe0ec] dark:border-[#f9d423] backdrop-blur-md transition-all duration-300 hover:shadow-[0_8px_32px_0_rgba(255,126,95,0.15)] scroll-mt-24">
-      <div className="flex items-center gap-3 mb-6">
-        <UserCircleIcon className="w-7 h-7 text-[#ff7e5f]" />
-        <h2 className="text-3xl font-bold text-[#1a1a1a] dark:text-[#fff7e6]">My Journey</h2>
-      </div>
-      <p className="text-lg text-[#1a1a1a] dark:text-[#fff7e6] leading-relaxed text-center">
-        My fascination with technology began with a simple question: <b>“How can we make life easier with code?”</b>  
-        From automating daily tasks to architecting AI-driven platforms, I’ve always been driven by curiosity and a desire to solve real-world problems.  
-        <br /><br />
-        Today, I specialize in building agentic AI solutions and cloud-native systems that help businesses unlock new possibilities. Every project is a new adventure—a chance to learn, create, and make an impact.
-      </p>
-      <div className="flex gap-8 mt-6 text-base text-[#ff7e5f] dark:text-[#f9d423] justify-center">
-        <span>🌍 Bengaluru, India</span>
-        <span>💼 3+ Years Experience</span>
+    <section id="about" className="py-24 px-6 scroll-mt-24" ref={ref}>
+      <div
+        className={`max-w-6xl mx-auto transition-all duration-700 ease-out ${
+          inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        }`}
+      >
+        <p className="text-sm font-mono text-indigo-400 mb-3 tracking-wider uppercase">
+          About
+        </p>
+        <h2 className="text-3xl sm:text-4xl font-bold text-white mb-10">
+          My Journey
+        </h2>
+
+        <div className="grid md:grid-cols-[1fr_auto] gap-12 items-start">
+          <div className="space-y-5 text-slate-400 text-lg leading-relaxed">
+            <p>
+              My fascination with technology began with a simple question:{" "}
+              <span className="text-white font-medium">
+                &ldquo;How can we make life easier with code?&rdquo;
+              </span>
+            </p>
+            <p>
+              From automating daily tasks to architecting AI-driven platforms,
+              I&apos;ve always been driven by curiosity and a desire to solve
+              real-world problems. Today, I specialize in building agentic AI
+              solutions and cloud-native systems that help businesses unlock new
+              possibilities.
+            </p>
+            <p>
+              Every project is a new adventure&mdash;a chance to learn, create,
+              and make an impact.
+            </p>
+          </div>
+
+          <div className="flex md:flex-col gap-4">
+            {highlights.map((item) => (
+              <div
+                key={item.label}
+                className="px-6 py-5 rounded-xl bg-white/[0.03] border border-white/[0.06] text-center min-w-[140px]"
+              >
+                <div className="text-2xl font-bold text-white mb-1">
+                  {item.value}
+                </div>
+                <div className="text-xs text-slate-500 uppercase tracking-wider">
+                  {item.label}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
