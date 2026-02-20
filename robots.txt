@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://portfolio.siddharthdangarh.com
+Host: https://www.siddharthdangarh.com
 
 # Sitemaps
-Sitemap: https://portfolio.siddharthdangarh.com/sitemap.xml
+Sitemap: https://www.siddharthdangarh.com/sitemap.xml
