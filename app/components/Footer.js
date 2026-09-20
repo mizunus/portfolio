@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="border-t border-white/[0.04] py-8 px-6" role="contentinfo">
+    <footer className="relative z-10 border-t border-white/[0.04] py-8 px-6" role="contentinfo">
       <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-slate-600">
         <span>
           &copy; {new Date().getFullYear()} Siddharth Dangarh. All rights reserved.
@@ -13,6 +13,14 @@ export default function Footer() {
             className="hover:text-slate-400 transition-colors duration-200"
           >
             LinkedIn
+          </a>
+          <a
+            href="https://discuvr.in"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-slate-400 transition-colors duration-200"
+          >
+            Discuvr
           </a>
           <a
             href="mailto:siddharthdangarh872@gmail.com"

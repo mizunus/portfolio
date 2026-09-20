@@ -4,13 +4,25 @@ import { useInView } from "../hooks/useInView";
 const experiences = [
   {
     company: "Saara Inc.",
+    role: "Lead Software Engineer",
+    period: "Sep 2026 - Present",
+    location: "Bengaluru",
+    current: true,
+    bullets: [
+      "Lead the engineering direction for Saara's AI products, setting architecture and technical standards across teams.",
+      "Own FlyOS end to end - agentic AI chat with tools and artifacts, plus the AI widget and workflow builders.",
+      "Mentor engineers and run design reviews, turning ambiguous product bets into shippable systems.",
+    ],
+  },
+  {
+    company: "Saara Inc.",
     role: "Senior Software Developer",
-    period: "May 2023 - Present",
+    period: "May 2023 - Aug 2026",
     location: "Bengaluru",
     bullets: [
       "Led architecture and implementation of an AI platform from scratch, designing agents that handle refunds, product analysis, and quality control.",
       "Drove cloud migration across AWS and Azure with robust security practices.",
-      "Shipped flagship products including EcoReturns, EcoShip, and FlyOS; in FlyOS, I helped build agentic AI chat with tools and artifacts, plus AI widget and workflow builders.",
+      "Shipped flagship products including EcoReturns, EcoShip, and FlyOS.",
     ],
   },
   {
@@ -52,9 +64,16 @@ export default function Experience() {
           {experiences.map((exp, idx) => (
             <article
               key={idx}
+              style={{ transitionDelay: `${idx * 90}ms` }}
               className="group relative pl-8 border-l-2 border-white/[0.06] hover:border-indigo-500/50 transition-colors duration-300"
             >
-              <div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full border-2 border-white/[0.08] bg-[#0a0a0f] group-hover:border-indigo-400 transition-colors duration-300" />
+              <div
+                className={`absolute -left-[9px] top-1 w-4 h-4 rounded-full border-2 bg-[#0a0a0f] transition-colors duration-300 ${
+                  exp.current
+                    ? "border-indigo-400 shadow-[0_0_16px_rgba(99,102,241,0.6)]"
+                    : "border-white/[0.08] group-hover:border-indigo-400"
+                }`}
+              />
 
               <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-1">
                 <h3 className="text-xl font-semibold text-white">

@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 
 const SITE_URL = "https://www.siddharthdangarh.com";
 const FULL_NAME = "Siddharth Dangarh";
-const TITLE = `${FULL_NAME} - Senior Software Developer`;
+const TITLE = `${FULL_NAME} - Lead Software Engineer`;
 const DESCRIPTION =
-  "Portfolio of Siddharth Dangarh, a Senior Software Developer in Bengaluru specializing in agentic AI platforms, cloud-native architecture (AWS, Azure), Python, Django, Next.js, and scalable full-stack systems.";
+  "Siddharth Dangarh is a Lead Software Engineer in Bengaluru who builds and ships production systems - commerce platforms, cloud-native backends and AI features. Python, Django, Next.js, React, AWS. Available for freelance and consulting work.";
 
 export const metadata = {
   metadataBase: new URL(SITE_URL),
@@ -25,10 +25,14 @@ export const metadata = {
   keywords: [
     "Siddharth Dangarh",
     "Siddharth Dangarh portfolio",
-    "Senior Software Developer",
-    "Senior Software Developer Bengaluru",
+    "Lead Software Engineer",
+    "Lead Software Engineer Bengaluru",
+    "AI consultant India",
+    "freelance AI developer",
     "AI Developer",
     "Full Stack Developer",
+    "E-commerce SaaS",
+    "Backend Engineer",
     "Agentic AI",
     "Cloud Architecture",
     "Python Developer",
@@ -59,11 +63,11 @@ export const metadata = {
     siteName: FULL_NAME,
     images: [
       {
-        url: "/images/preview.jpeg",
+        url: "/images/preview.png",
         width: 1200,
         height: 630,
-        alt: `${FULL_NAME} - Senior Software Developer Portfolio`,
-        type: "image/jpeg",
+        alt: `${FULL_NAME} - Lead Software Engineer Portfolio`,
+        type: "image/png",
       },
     ],
     locale: "en_US",
@@ -74,7 +78,7 @@ export const metadata = {
     card: "summary_large_image",
     title: TITLE,
     description: DESCRIPTION,
-    images: ["/images/preview.jpeg"],
+    images: ["/images/preview.png"],
   },
 
   robots: {
@@ -93,7 +97,6 @@ export const metadata = {
   other: {
     "theme-color": "#0a0a0f",
     "color-scheme": "dark",
-    "google-site-verification": "REPLACE_WITH_YOUR_VERIFICATION_CODE",
   },
 };
 

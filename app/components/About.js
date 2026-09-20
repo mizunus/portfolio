@@ -2,9 +2,9 @@
 import { useInView } from "../hooks/useInView";
 
 const highlights = [
-  { label: "Years Experience", value: "3+" },
-  { label: "Projects Shipped", value: "10+" },
-  { label: "Location", value: "Bengaluru" },
+  { label: "Years Building", value: "4+" },
+  { label: "Products Shipped", value: "10+" },
+  { label: "Based In", value: "Bengaluru" },
 ];
 
 export default function About() {
@@ -40,13 +40,18 @@ export default function About() {
             <p>
               From automating daily tasks to architecting AI-driven platforms,
               I&apos;ve always been driven by curiosity and a desire to solve
-              real-world problems. Today, I specialize in building agentic AI
-              solutions and cloud-native systems that help businesses unlock new
-              possibilities.
+              real-world problems. Today I lead engineering at Saara, where
+              I&apos;ve shipped four commerce products — returns, shipping,
+              tracking and an agentic AI platform — and the unified Commerce OS
+              that brings them under one roof. AI is part of that work, not the
+              whole of it; mostly the job is designing systems that stay up,
+              scale, and are pleasant to work on a year later.
             </p>
             <p>
-              Every project is a new adventure - a chance to learn, create,
-              and make an impact.
+              Outside of work I run <a href="https://discuvr.in" target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:text-indigo-300 underline underline-offset-4 decoration-indigo-400/30 transition-colors">Discuvr</a>,
+              a lab where I turn ideas into working tools in days rather than
+              quarters. If you have something that needs building, that&apos;s
+              usually the fastest way to see how I work.
             </p>
           </div>
 

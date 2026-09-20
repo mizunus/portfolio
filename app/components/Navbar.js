@@ -2,13 +2,13 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import ScrollProgress from "./ScrollProgress";
 
 const navLinks = [
   { label: "About", href: "#about" },
   { label: "Experience", href: "#experience" },
   { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
-  { label: "Contact", href: "#contact" },
 ];
 
 export default function Navbar() {
@@ -61,6 +61,13 @@ export default function Navbar() {
           ))}
         </div>
 
+        <a
+          href="#contact"
+          className="hidden md:inline-flex px-4 py-2 rounded-lg bg-white/[0.04] border border-white/[0.1] text-sm text-slate-200 hover:bg-indigo-500 hover:border-indigo-400 hover:text-white transition-all duration-200"
+        >
+          Get in touch
+        </a>
+
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
           className="md:hidden text-slate-400 hover:text-white transition-colors"
@@ -105,9 +112,18 @@ export default function Navbar() {
                 {link.label}
               </a>
             ))}
+            <a
+              href="#contact"
+              onClick={() => setMobileOpen(false)}
+              className="mt-1 px-4 py-2.5 rounded-lg bg-indigo-500 text-white text-sm font-medium text-center"
+            >
+              Get in touch
+            </a>
           </nav>
         </div>
       )}
+
+      <ScrollProgress />
     </header>
   );
 }
