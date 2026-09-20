@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useInView } from "../hooks/useInView";
+import { useI18n } from "../i18n/LanguageProvider";
 
 const EMAIL = "siddharthdangarh872@gmail.com";
 
@@ -8,15 +9,11 @@ const EMAIL = "siddharthdangarh872@gmail.com";
 // Without it the section degrades to a plain mailto button.
 const ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
 
-const INTENTS = [
-  { id: "project", label: "Hire me for a project" },
-  { id: "role", label: "Talk about a role" },
-  { id: "advice", label: "Get technical advice" },
-  { id: "other", label: "Something else" },
-];
+const INTENT_IDS = ["project", "role", "advice", "other"];
 
 export default function Contact() {
   const [ref, inView] = useInView();
+  const { t, locale } = useI18n();
   const [intent, setIntent] = useState("project");
   const [status, setStatus] = useState("idle"); // idle | sending | sent | error
   const [error, setError] = useState("");
@@ -34,11 +31,10 @@ export default function Contact() {
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
           access_key: ACCESS_KEY,
-          subject: `Portfolio: ${
-            INTENTS.find((i) => i.id === intent)?.label ?? "Enquiry"
-          } - ${data.name}`,
+          subject: `Portfolio: ${intent} - ${data.name}`,
           from_name: "siddharthdangarh.com",
-          intent: INTENTS.find((i) => i.id === intent)?.label,
+          intent: t(`contact.intents.${intent}`),
+          locale,
           ...data,
         }),
       });
@@ -53,7 +49,7 @@ export default function Contact() {
   }
 
   const field =
-    "w-full px-4 py-3 rounded-lg bg-white/[0.03] border border-white/[0.08] text-slate-200 placeholder:text-slate-600 focus:outline-none focus:border-indigo-500/50 focus:bg-white/[0.05] transition-all duration-200";
+    "w-full px-4 py-3 rounded-lg bg-white/[0.03] border border-white/[0.08] text-slate-200 placeholder:text-slate-600 focus:outline-none focus:border-accent-500/50 focus:bg-white/[0.05] transition-all duration-200";
 
   return (
     <section
@@ -68,16 +64,13 @@ export default function Contact() {
         }`}
       >
         <div className="text-center">
-          <p className="text-sm font-mono text-indigo-400 mb-3 tracking-wider uppercase">
+          <p className="text-sm font-mono text-accent-400 mb-3 tracking-wider uppercase">
             Contact
           </p>
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-            Let&apos;s build something
+            {t("contact.title")}
           </h2>
-          <p className="text-slate-400 text-lg mb-10 leading-relaxed">
-            Tell me what you&apos;re working on. I read every message and reply
-            within a day or two.
-          </p>
+          <p className="text-slate-400 text-lg mb-10 leading-relaxed">{t("contact.blurb")}</p>
         </div>
 
         {status === "sent" ? (
@@ -89,33 +82,30 @@ export default function Contact() {
               ✦
             </div>
             <h3 className="text-xl font-semibold text-white mb-2">
-              Message received
+              {t("contact.sentTitle")}
             </h3>
-            <p className="text-slate-400">
-              Thanks for reaching out — I&apos;ll get back to you at the email
-              you gave shortly.
-            </p>
+            <p className="text-slate-400">{t("contact.sentBody")}</p>
           </div>
         ) : ACCESS_KEY ? (
           <form onSubmit={onSubmit} className="space-y-5">
             <fieldset>
               <legend className="text-sm text-slate-400 mb-3">
-                What brings you here?
+                {t("contact.intentLegend")}
               </legend>
               <div className="flex flex-wrap gap-2">
-                {INTENTS.map((opt) => (
+                {INTENT_IDS.map((id) => (
                   <button
-                    key={opt.id}
+                    key={id}
                     type="button"
-                    onClick={() => setIntent(opt.id)}
-                    aria-pressed={intent === opt.id}
+                    onClick={() => setIntent(id)}
+                    aria-pressed={intent === id}
                     className={`px-4 py-2 rounded-lg text-sm border transition-all duration-200 ${
-                      intent === opt.id
-                        ? "bg-indigo-500/15 border-indigo-400/40 text-indigo-200"
+                      intent === id
+                        ? "bg-accent-500/15 border-accent-400/40 text-accent-200"
                         : "bg-white/[0.02] border-white/[0.08] text-slate-400 hover:text-white hover:border-white/[0.16]"
                     }`}
                   >
-                    {opt.label}
+                    {t(`contact.intents.${id}`)}
                   </button>
                 ))}
               </div>
@@ -124,20 +114,20 @@ export default function Contact() {
             <div className="grid sm:grid-cols-2 gap-5">
               <div>
                 <label htmlFor="name" className="block text-sm text-slate-400 mb-2">
-                  Name
+                  {t("contact.name")}
                 </label>
                 <input
                   id="name"
                   name="name"
                   required
                   autoComplete="name"
-                  placeholder="Your name"
+                  placeholder={t("contact.namePlaceholder")}
                   className={field}
                 />
               </div>
               <div>
                 <label htmlFor="email" className="block text-sm text-slate-400 mb-2">
-                  Email
+                  {t("contact.email")}
                 </label>
                 <input
                   id="email"
@@ -145,7 +135,7 @@ export default function Contact() {
                   type="email"
                   required
                   autoComplete="email"
-                  placeholder="you@company.com"
+                  placeholder={t("contact.emailPlaceholder")}
                   className={field}
                 />
               </div>
@@ -153,14 +143,14 @@ export default function Contact() {
 
             <div>
               <label htmlFor="message" className="block text-sm text-slate-400 mb-2">
-                What do you need?
+                {t("contact.message")}
               </label>
               <textarea
                 id="message"
                 name="message"
                 required
                 rows={4}
-                placeholder="A sentence or two is plenty — what you're building, and where you're stuck."
+                placeholder={t("contact.messagePlaceholder")}
                 className={`${field} resize-y`}
               />
             </div>
@@ -177,7 +167,7 @@ export default function Contact() {
 
             {status === "error" && (
               <p role="alert" className="text-sm text-rose-400">
-                {error} You can also email me directly at{" "}
+                {error} {t("contact.errorSuffix")}{" "}
                 <a href={`mailto:${EMAIL}`} className="underline">
                   {EMAIL}
                 </a>
@@ -188,22 +178,20 @@ export default function Contact() {
             <button
               type="submit"
               disabled={status === "sending"}
-              className="w-full px-8 py-3.5 rounded-lg bg-indigo-500 hover:bg-indigo-400 disabled:opacity-60 disabled:cursor-not-allowed text-white font-medium transition-all duration-200 hover:shadow-[0_0_32px_rgba(99,102,241,0.3)]"
+              className="w-full px-8 py-3.5 rounded-lg bg-accent-500 hover:bg-accent-400 disabled:opacity-60 disabled:cursor-not-allowed text-white font-medium transition-all duration-200 hover:shadow-[0_0_32px_rgb(var(--accent-rgb)/0.3)]"
             >
-              {status === "sending" ? "Sending…" : "Send message"}
+              {status === "sending" ? t("contact.sending") : t("contact.send")}
             </button>
 
-            <p className="text-xs text-slate-600 text-center">
-              Straight to my inbox. No newsletter, no list, no follow-up spam.
-            </p>
+            <p className="text-xs text-slate-600 text-center">{t("contact.privacy")}</p>
           </form>
         ) : (
           <div className="text-center">
             <a
               href={`mailto:${EMAIL}`}
-              className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-lg bg-indigo-500 hover:bg-indigo-400 text-white font-medium transition-all duration-200 hover:shadow-[0_0_32px_rgba(99,102,241,0.25)]"
+              className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-lg bg-accent-500 hover:bg-accent-400 text-white font-medium transition-all duration-200 hover:shadow-[0_0_32px_rgb(var(--accent-rgb)/0.25)]"
             >
-              Email me
+              {t("contact.emailMe")}
             </a>
           </div>
         )}
@@ -213,13 +201,13 @@ export default function Contact() {
             href="https://in.linkedin.com/in/siddharth-dangarh-a896b61a7"
             target="_blank"
             rel="me noopener noreferrer"
-            className="text-slate-500 hover:text-indigo-400 transition-colors duration-200"
+            className="text-slate-500 hover:text-accent-400 transition-colors duration-200"
           >
             LinkedIn
           </a>
           <a
             href={`mailto:${EMAIL}`}
-            className="text-slate-500 hover:text-indigo-400 transition-colors duration-200"
+            className="text-slate-500 hover:text-accent-400 transition-colors duration-200"
           >
             Email
           </a>
@@ -227,7 +215,7 @@ export default function Contact() {
             href="https://discuvr.in"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-slate-500 hover:text-indigo-400 transition-colors duration-200"
+            className="text-slate-500 hover:text-accent-400 transition-colors duration-200"
           >
             Discuvr
           </a>

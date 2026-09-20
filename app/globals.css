@@ -1,8 +1,26 @@
 @import "tailwindcss";
 
+/* ---------------------------------------------------------------
+   ACCENT PALETTE — single source of truth.
+   Swap these four hues (and --accent-rgb) to retheme the whole site.
+   Alternatives worth trying:
+     amber  200:#fde68a 300:#fcd34d 400:#fbbf24 500:#f59e0b  rgb:245,158,11
+     teal   200:#99f6e4 300:#5eead4 400:#2dd4bf 500:#14b8a6  rgb:20,184,166
+     cyan   200:#a5f3fc 300:#67e8f9 400:#22d3ee 500:#06b6d4  rgb:6,182,212
+   --------------------------------------------------------------- */
+:root {
+  --accent-rgb: 99, 102, 241;
+  --accent-soft-rgb: 168, 85, 247;
+}
+
 @theme inline {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  --color-accent-200: #c7d2fe;
+  --color-accent-300: #a5b4fc;
+  --color-accent-400: #818cf8;
+  --color-accent-500: #6366f1;
 }
 
 html {
@@ -17,7 +35,7 @@ body {
 }
 
 ::selection {
-  background: rgba(99, 102, 241, 0.3);
+  background: rgb(var(--accent-rgb) / 0.3);
   color: #fff;
 }
 
@@ -61,7 +79,7 @@ body {
   left: -10%;
   width: 45vw;
   height: 45vw;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.5), transparent 70%);
+  background: radial-gradient(circle, rgb(var(--accent-rgb) / 0.5), transparent 70%);
   animation: drift-a 24s ease-in-out infinite alternate;
 }
 
@@ -70,7 +88,7 @@ body {
   right: -10%;
   width: 40vw;
   height: 40vw;
-  background: radial-gradient(circle, rgba(168, 85, 247, 0.4), transparent 70%);
+  background: radial-gradient(circle, rgb(var(--accent-soft-rgb) / 0.4), transparent 70%);
   animation: drift-b 30s ease-in-out infinite alternate;
 }
 
@@ -143,7 +161,7 @@ body {
   transition: opacity 0.35s ease;
   background: radial-gradient(
     380px circle at var(--mx, 50%) var(--my, 50%),
-    rgba(99, 102, 241, 0.12),
+    rgb(var(--accent-rgb) / 0.12),
     transparent 65%
   );
   z-index: -1;
@@ -164,7 +182,7 @@ body {
   transition: opacity 0.35s ease;
   background: radial-gradient(
     300px circle at var(--mx, 50%) var(--my, 50%),
-    rgba(129, 140, 248, 0.5),
+    rgb(var(--accent-rgb) / 0.55),
     transparent 60%
   );
   -webkit-mask:
@@ -182,7 +200,7 @@ body {
 /* ---- Text + entrance helpers ---- */
 
 .text-gradient {
-  background: linear-gradient(110deg, #a5b4fc, #c4b5fd 40%, #f0abfc 70%, #a5b4fc);
+  background: linear-gradient(110deg, var(--color-accent-300), var(--color-accent-200) 40%, rgb(var(--accent-soft-rgb) / 0.9) 70%, var(--color-accent-300));
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;

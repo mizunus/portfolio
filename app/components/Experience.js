@@ -1,51 +1,17 @@
 "use client";
 import { useInView } from "../hooks/useInView";
-
-const experiences = [
-  {
-    company: "Saara Inc.",
-    role: "Lead Software Engineer",
-    period: "Sep 2026 - Present",
-    location: "Bengaluru",
-    current: true,
-    bullets: [
-      "Lead the engineering direction for Saara's AI products, setting architecture and technical standards across teams.",
-      "Own FlyOS end to end - agentic AI chat with tools and artifacts, plus the AI widget and workflow builders.",
-      "Mentor engineers and run design reviews, turning ambiguous product bets into shippable systems.",
-    ],
-  },
-  {
-    company: "Saara Inc.",
-    role: "Senior Software Developer",
-    period: "May 2023 - Aug 2026",
-    location: "Bengaluru",
-    bullets: [
-      "Led architecture and implementation of an AI platform from scratch, designing agents that handle refunds, product analysis, and quality control.",
-      "Drove cloud migration across AWS and Azure with robust security practices.",
-      "Shipped flagship products including EcoReturns, EcoShip, and FlyOS.",
-    ],
-  },
-  {
-    company: "Saara Inc.",
-    role: "Software Developer",
-    period: "Jul 2022 - Apr 2023",
-    location: "Bengaluru",
-    bullets: [
-      "Built a ChatGPT-powered returns/exchange chatbot, modernizing legacy customer service flows.",
-      "Revamped and stabilized legacy codebases, improving performance and maintainability.",
-      "Collaborated across the full software lifecycle from design to deployment.",
-    ],
-  },
-];
+import { useI18n } from "../i18n/LanguageProvider";
 
 export default function Experience() {
   const [ref, inView] = useInView();
+  const { t } = useI18n();
+  const experiences = t("experience.entries");
 
   return (
     <section
       id="experience"
       aria-label="Work experience"
-      className="py-24 px-6 scroll-mt-24"
+      className="relative py-28 px-6 scroll-mt-24 border-y border-white/[0.06] bg-white/[0.015]"
       ref={ref}
     >
       <div
@@ -53,11 +19,11 @@ export default function Experience() {
           inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
       >
-        <p className="text-sm font-mono text-indigo-400 mb-3 tracking-wider uppercase">
-          Experience
+        <p className="text-sm font-mono text-accent-400 mb-3 tracking-wider uppercase">
+          {t("experience.label")}
         </p>
         <h2 className="text-3xl sm:text-4xl font-bold text-white mb-12">
-          Where I&apos;ve Worked
+          {t("experience.title")}
         </h2>
 
         <div className="space-y-12">
@@ -65,22 +31,20 @@ export default function Experience() {
             <article
               key={idx}
               style={{ transitionDelay: `${idx * 90}ms` }}
-              className="group relative pl-8 border-l-2 border-white/[0.06] hover:border-indigo-500/50 transition-colors duration-300"
+              className="group relative pl-8 border-l-2 border-white/[0.06] hover:border-accent-500/50 transition-colors duration-300"
             >
               <div
                 className={`absolute -left-[9px] top-1 w-4 h-4 rounded-full border-2 bg-[#0a0a0f] transition-colors duration-300 ${
-                  exp.current
-                    ? "border-indigo-400 shadow-[0_0_16px_rgba(99,102,241,0.6)]"
-                    : "border-white/[0.08] group-hover:border-indigo-400"
+                  idx === 0
+                    ? "border-accent-400 shadow-[0_0_16px_rgb(var(--accent-rgb)/0.6)]"
+                    : "border-white/[0.08] group-hover:border-accent-400"
                 }`}
               />
 
               <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-1">
                 <h3 className="text-xl font-semibold text-white">
                   {exp.role}{" "}
-                  <span className="text-slate-500 font-normal">
-                    @ {exp.company}
-                  </span>
+                  <span className="text-slate-500 font-normal">@ Saara Inc.</span>
                 </h3>
                 <time className="text-sm font-mono text-slate-500 shrink-0">
                   {exp.period}
@@ -95,7 +59,7 @@ export default function Experience() {
                     key={i}
                     className="text-slate-400 leading-relaxed flex gap-3"
                   >
-                    <span className="text-indigo-400/50 mt-1 shrink-0" aria-hidden="true">
+                    <span className="text-accent-400/50 mt-1 shrink-0" aria-hidden="true">
                       ▹
                     </span>
                     <span>{item}</span>

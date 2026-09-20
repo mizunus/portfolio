@@ -7,6 +7,7 @@ import Projects from "./components/Projects";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import Ambient from "./components/Ambient";
+import { LanguageProvider } from "./i18n/LanguageProvider";
 
 function JsonLd() {
   const schema = {
@@ -81,7 +82,8 @@ function JsonLd() {
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-slate-200 overflow-x-hidden">
+    <LanguageProvider>
+      <div className="min-h-screen bg-[#0a0a0f] text-slate-200 overflow-x-hidden">
       <JsonLd />
       <Ambient />
       <Navbar />
@@ -94,6 +96,7 @@ export default function Home() {
         <Contact />
       </main>
       <Footer />
-    </div>
+      </div>
+    </LanguageProvider>
   );
 }

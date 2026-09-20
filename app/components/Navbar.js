@@ -3,15 +3,18 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import ScrollProgress from "./ScrollProgress";
+import LanguageSwitcher from "./LanguageSwitcher";
+import { useI18n } from "../i18n/LanguageProvider";
 
 const navLinks = [
-  { label: "About", href: "#about" },
-  { label: "Experience", href: "#experience" },
-  { label: "Skills", href: "#skills" },
-  { label: "Projects", href: "#projects" },
+  { key: "about", href: "#about" },
+  { key: "experience", href: "#experience" },
+  { key: "skills", href: "#skills" },
+  { key: "projects", href: "#projects" },
 ];
 
 export default function Navbar() {
+  const { t } = useI18n();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -56,22 +59,25 @@ export default function Navbar() {
               href={link.href}
               className="text-sm text-slate-400 hover:text-white transition-colors duration-200"
             >
-              {link.label}
+              {t(`nav.${link.key}`)}
             </a>
           ))}
         </div>
 
-        <a
-          href="#contact"
-          className="hidden md:inline-flex px-4 py-2 rounded-lg bg-white/[0.04] border border-white/[0.1] text-sm text-slate-200 hover:bg-indigo-500 hover:border-indigo-400 hover:text-white transition-all duration-200"
-        >
-          Get in touch
-        </a>
+        <div className="flex items-center gap-1 md:gap-2">
+          <LanguageSwitcher />
 
-        <button
+          <a
+            href="#contact"
+            className="hidden md:inline-flex px-4 py-2 rounded-lg bg-white/[0.04] border border-white/[0.1] text-sm text-slate-200 hover:bg-accent-500 hover:border-accent-400 hover:text-white transition-all duration-200"
+          >
+            {t("nav.cta")}
+          </a>
+
+          <button
           onClick={() => setMobileOpen(!mobileOpen)}
           className="md:hidden text-slate-400 hover:text-white transition-colors"
-          aria-label={mobileOpen ? "Close menu" : "Open menu"}
+          aria-label={mobileOpen ? t("nav.menuClose") : t("nav.menuOpen")}
           aria-expanded={mobileOpen}
         >
           <svg
@@ -95,8 +101,9 @@ export default function Navbar() {
                 d="M4 6h16M4 12h16M4 18h16"
               />
             )}
-          </svg>
-        </button>
+            </svg>
+          </button>
+        </div>
       </nav>
 
       {mobileOpen && (
@@ -109,15 +116,15 @@ export default function Navbar() {
                 onClick={() => setMobileOpen(false)}
                 className="text-sm text-slate-400 hover:text-white transition-colors"
               >
-                {link.label}
+                {t(`nav.${link.key}`)}
               </a>
             ))}
             <a
               href="#contact"
               onClick={() => setMobileOpen(false)}
-              className="mt-1 px-4 py-2.5 rounded-lg bg-indigo-500 text-white text-sm font-medium text-center"
+              className="mt-1 px-4 py-2.5 rounded-lg bg-accent-500 text-white text-sm font-medium text-center"
             >
-              Get in touch
+              {t("nav.cta")}
             </a>
           </nav>
         </div>

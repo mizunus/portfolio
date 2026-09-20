@@ -1,18 +1,19 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-
-const ROLES = [
-  "systems that ship",
-  "commerce platforms",
-  "cloud-native backends",
-  "AI that earns its place",
-];
+import { useI18n } from "../i18n/LanguageProvider";
 
 function useTypewriter(words, { typeMs = 65, eraseMs = 30, holdMs = 1800 } = {}) {
   // Seeded with the first phrase so the H1 has real text in the static HTML.
   const [text, setText] = useState(words[0]);
   const [idx, setIdx] = useState(0);
   const [erasing, setErasing] = useState(false);
+
+  // Start the cycle over when the language changes.
+  useEffect(() => {
+    setText(words[0]);
+    setIdx(0);
+    setErasing(false);
+  }, [words]);
 
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -48,9 +49,10 @@ function useTypewriter(words, { typeMs = 65, eraseMs = 30, holdMs = 1800 } = {})
 }
 
 export default function Hero() {
+  const { t } = useI18n();
   const [mounted, setMounted] = useState(false);
   const glowRef = useRef(null);
-  const typed = useTypewriter(ROLES);
+  const typed = useTypewriter(t("hero.roles"));
 
   useEffect(() => setMounted(true), []);
 
@@ -92,7 +94,7 @@ export default function Hero() {
         aria-hidden="true"
         className="absolute inset-0 pointer-events-none will-change-transform"
       >
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[640px] h-[640px] max-w-[90vw] bg-indigo-500/10 rounded-full blur-[140px]" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[640px] h-[640px] max-w-[90vw] bg-accent-500/10 rounded-full blur-[140px]" />
       </div>
 
       <div className="relative max-w-4xl mx-auto text-center">
@@ -120,25 +122,23 @@ export default function Hero() {
         >
           I build{" "}
           <span className="text-gradient">{typed || " "}</span>
-          <span className="caret text-indigo-400" aria-hidden="true" />
+          <span className="caret text-accent-400" aria-hidden="true" />
         </h1>
 
         <p
           className={`text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto mb-4 leading-relaxed ${step(2)}`}
           style={{ transitionDelay: "220ms" }}
         >
-          I&apos;m <span className="text-white font-medium">Siddharth Dangarh</span>,
-          Lead Software Engineer at Saara. I&apos;ve taken four commerce products
-          from blank repo to production — returns, shipping, tracking and the
-          platform that ties them together. I do the same for a handful of
-          clients each year.
+          {t("hero.introBefore")}{" "}
+          <span className="text-white font-medium">{t("hero.name")}</span>
+          {t("hero.introAfter")}
         </p>
 
         <p
           className={`text-sm font-mono text-slate-600 mb-10 ${step(3)}`}
           style={{ transitionDelay: "280ms" }}
         >
-          Python · Django · Next.js · React · AWS · Azure · Postgres
+          {t("hero.stack")}
         </p>
 
         <div
@@ -147,9 +147,9 @@ export default function Hero() {
         >
           <a
             href="#contact"
-            className="group px-8 py-3.5 rounded-lg bg-indigo-500 hover:bg-indigo-400 text-white font-medium transition-all duration-200 hover:shadow-[0_0_40px_rgba(99,102,241,0.35)]"
+            className="group px-8 py-3.5 rounded-lg bg-accent-500 hover:bg-accent-400 text-white font-medium transition-all duration-200 hover:shadow-[0_0_40px_rgb(var(--accent-rgb)/0.35)]"
           >
-            Start a project
+            {t("hero.ctaPrimary")}
             <span className="inline-block ml-2 transition-transform duration-200 group-hover:translate-x-1">
               &rarr;
             </span>
@@ -158,7 +158,7 @@ export default function Hero() {
             href="#projects"
             className="px-8 py-3.5 rounded-lg border border-white/[0.1] text-slate-300 hover:text-white hover:border-white/[0.2] hover:bg-white/[0.03] font-medium transition-all duration-200"
           >
-            See what I&apos;ve shipped
+            {t("hero.ctaSecondary")}
           </a>
         </div>
       </div>

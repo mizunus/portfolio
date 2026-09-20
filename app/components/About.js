@@ -1,14 +1,11 @@
 "use client";
 import { useInView } from "../hooks/useInView";
-
-const highlights = [
-  { label: "Years Building", value: "4+" },
-  { label: "Products Shipped", value: "10+" },
-  { label: "Based In", value: "Bengaluru" },
-];
+import { useI18n } from "../i18n/LanguageProvider";
 
 export default function About() {
   const [ref, inView] = useInView();
+  const { t } = useI18n();
+  const highlights = t("about.highlights");
 
   return (
     <section
@@ -22,36 +19,31 @@ export default function About() {
           inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
       >
-        <p className="text-sm font-mono text-indigo-400 mb-3 tracking-wider uppercase">
-          About
+        <p className="text-sm font-mono text-accent-400 mb-3 tracking-wider uppercase">
+          {t("about.label")}
         </p>
         <h2 className="text-3xl sm:text-4xl font-bold text-white mb-10">
-          My Journey
+          {t("about.title")}
         </h2>
 
         <div className="grid md:grid-cols-[1fr_auto] gap-12 items-start">
           <div className="space-y-5 text-slate-400 text-lg leading-relaxed">
             <p>
-              My fascination with technology began with a simple question:{" "}
-              <span className="text-white font-medium">
-                &ldquo;How can we make life easier with code?&rdquo;
-              </span>
+              {t("about.p1Before")}{" "}
+              <span className="text-white font-medium">{t("about.p1Quote")}</span>
             </p>
+            <p>{t("about.p2")}</p>
             <p>
-              From automating daily tasks to architecting AI-driven platforms,
-              I&apos;ve always been driven by curiosity and a desire to solve
-              real-world problems. Today I lead engineering at Saara, where
-              I&apos;ve shipped four commerce products — returns, shipping,
-              tracking and an agentic AI platform — and the unified Commerce OS
-              that brings them under one roof. AI is part of that work, not the
-              whole of it; mostly the job is designing systems that stay up,
-              scale, and are pleasant to work on a year later.
-            </p>
-            <p>
-              Outside of work I run <a href="https://discuvr.in" target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:text-indigo-300 underline underline-offset-4 decoration-indigo-400/30 transition-colors">Discuvr</a>,
-              a lab where I turn ideas into working tools in days rather than
-              quarters. If you have something that needs building, that&apos;s
-              usually the fastest way to see how I work.
+              {t("about.p3Before")}{" "}
+              <a
+                href="https://discuvr.in"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-accent-400 hover:text-accent-300 underline underline-offset-4 decoration-accent-400/30 transition-colors"
+              >
+                Discuvr
+              </a>
+              {t("about.p3After")}
             </p>
           </div>
 

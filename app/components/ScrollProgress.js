@@ -30,7 +30,7 @@ export default function ScrollProgress() {
       aria-hidden="true"
     >
       <div
-        className="h-full bg-gradient-to-r from-indigo-500 via-violet-400 to-fuchsia-400 transition-[width] duration-75 ease-out"
+        className="h-full bg-gradient-to-r from-accent-500 via-violet-400 to-fuchsia-400 transition-[width] duration-75 ease-out"
         style={{ width: `${pct}%` }}
       />
     </div>

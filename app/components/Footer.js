@@ -1,9 +1,14 @@
+"use client";
+import { useI18n } from "../i18n/LanguageProvider";
+
 export default function Footer() {
+  const { t } = useI18n();
+
   return (
     <footer className="relative z-10 border-t border-white/[0.04] py-8 px-6" role="contentinfo">
       <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-slate-600">
         <span>
-          &copy; {new Date().getFullYear()} Siddharth Dangarh. All rights reserved.
+          &copy; {new Date().getFullYear()} Siddharth Dangarh. {t("footer.rights")}
         </span>
         <nav aria-label="Footer links" className="flex gap-6">
           <a
