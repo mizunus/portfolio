@@ -32,7 +32,7 @@ export default function LanguageSwitcher() {
         aria-label={t("nav.language")}
         aria-haspopup="listbox"
         aria-expanded={open}
-        className="flex items-center gap-1.5 px-2.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.06] transition-colors duration-200"
+        className="flex items-center gap-1.5 px-2.5 py-2 rounded-lg text-muted hover:text-fg hover:bg-ink/[0.06] transition-colors duration-200"
       >
         <svg
           className="w-5 h-5"
@@ -57,7 +57,7 @@ export default function LanguageSwitcher() {
         <ul
           role="listbox"
           aria-label={t("nav.language")}
-          className="absolute right-0 mt-2 w-44 py-1.5 rounded-xl bg-[#0f0f18]/95 backdrop-blur-xl border border-white/[0.08] shadow-2xl shadow-black/50 z-50"
+          className="absolute right-0 mt-2 w-44 py-1.5 rounded-xl bg-popover backdrop-blur-xl border border-line shadow-2xl shadow-black/20 dark:shadow-black/50 z-50 origin-top-right animate-[pop-in_0.35s_cubic-bezier(0.16,1,0.3,1)]"
         >
           {LOCALES.map((l) => (
             <li key={l.code}>
@@ -72,11 +72,11 @@ export default function LanguageSwitcher() {
                 className={`w-full flex items-center justify-between px-4 py-2 text-sm transition-colors duration-150 ${
                   l.code === locale
                     ? "text-accent-300 bg-accent-500/10"
-                    : "text-slate-400 hover:text-white hover:bg-white/[0.05]"
+                    : "text-muted hover:text-fg hover:bg-ink/[0.05]"
                 }`}
               >
                 <span>{l.native}</span>
-                <span className="text-[10px] font-mono uppercase text-slate-600">
+                <span className="text-[10px] font-mono uppercase text-faint">
                   {l.code}
                 </span>
               </button>

@@ -1,6 +1,10 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { useI18n } from "../i18n/LanguageProvider";
+import { clamp01, useScrollFrame } from "../hooks/useScrollFrame";
+import HeroField from "./HeroField";
+import SplitText from "./motion/SplitText";
+import Magnetic from "./motion/Magnetic";
 
 function useTypewriter(words, { typeMs = 65, eraseMs = 30, holdMs = 1800 } = {}) {
   // Seeded with the first phrase so the H1 has real text in the static HTML.
@@ -50,136 +54,107 @@ function useTypewriter(words, { typeMs = 65, eraseMs = 30, holdMs = 1800 } = {})
 
 export default function Hero() {
   const { t } = useI18n();
-  const [mounted, setMounted] = useState(false);
-  const glowRef = useRef(null);
+  const sectionRef = useRef(null);
+  const contentRef = useRef(null);
   const typed = useTypewriter(t("hero.roles"));
 
-  useEffect(() => setMounted(true), []);
-
-  // Pointer-tracked glow — cheap parallax that makes the hero feel alive.
-  useEffect(() => {
-    const el = glowRef.current;
-    if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    let frame = 0;
-    const onMove = (e) => {
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => {
-        const x = (e.clientX / window.innerWidth - 0.5) * 40;
-        const y = (e.clientY / window.innerHeight - 0.5) * 40;
-        el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-      });
-    };
-
-    window.addEventListener("pointermove", onMove, { passive: true });
-    return () => {
-      window.removeEventListener("pointermove", onMove);
-      cancelAnimationFrame(frame);
-    };
-  }, []);
-
-  const step = (n) =>
-    `transition-all duration-700 ease-out ${
-      mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-    }`;
+  // Content sinks, shrinks and blurs as the hero scrolls away.
+  useScrollFrame(() => {
+    const section = sectionRef.current;
+    const content = contentRef.current;
+    if (!section || !content) return;
+    const p = clamp01(window.scrollY / (section.offsetHeight * 0.85));
+    content.style.setProperty("--hp", p.toFixed(4));
+  });
 
   return (
     <section
+      ref={sectionRef}
       aria-label="Introduction"
       className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden"
     >
-      <div
-        ref={glowRef}
-        aria-hidden="true"
-        className="absolute inset-0 pointer-events-none will-change-transform"
-      >
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[640px] h-[640px] max-w-[90vw] bg-accent-500/10 rounded-full blur-[140px]" />
-      </div>
+      <HeroField />
 
-      <div className="relative max-w-4xl mx-auto text-center">
-        <div
-          className={step(0)}
-          style={{ transitionDelay: "60ms" }}
-        >
-          <a
-            href="#contact"
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-emerald-400/20 bg-emerald-400/[0.06] mb-8 hover:border-emerald-400/40 transition-colors"
-          >
-            <span className="relative flex w-2 h-2">
-              <span className="absolute inline-flex w-full h-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
-              <span className="relative inline-flex w-2 h-2 rounded-full bg-emerald-400" />
-            </span>
-            <span className="text-xs font-mono text-emerald-300/90 tracking-wide">
-              Open to freelance &amp; consulting
-            </span>
-          </a>
+      <div ref={contentRef} className="hero-parallax relative max-w-4xl mx-auto text-center">
+        <div className="hero-enter" style={{ "--d": "0ms" }}>
+          <Magnetic strength={0.2}>
+            <a
+              href="#contact"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-emerald-600/25 bg-emerald-500/[0.08] dark:border-emerald-400/20 dark:bg-emerald-400/[0.06] mb-8 hover:border-emerald-500/50 transition-colors backdrop-blur-sm"
+            >
+              <span className="relative flex w-2 h-2">
+                <span className="absolute inline-flex w-full h-full rounded-full bg-emerald-500 dark:bg-emerald-400 opacity-75 animate-ping" />
+                <span className="relative inline-flex w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400" />
+              </span>
+              <span className="text-xs font-mono text-emerald-700 dark:text-emerald-300/90 tracking-wide">
+                {t("hero.badge")}
+              </span>
+            </a>
+          </Magnetic>
         </div>
 
-        <h1
-          className={`text-5xl sm:text-7xl lg:text-[5.5rem] font-bold text-white leading-[1.02] mb-6 tracking-tight ${step(1)}`}
-          style={{ transitionDelay: "140ms" }}
-        >
-          I build{" "}
-          <span className="text-gradient">{typed || " "}</span>
-          <span className="caret text-accent-400" aria-hidden="true" />
+        <h1 className="hero-title text-5xl sm:text-7xl lg:text-[5.5rem] font-bold text-fg leading-[1.02] mb-6 tracking-tight">
+          <SplitText text={t("hero.headline")} mode="chars" delay={120} stagger={40} />{" "}
+          <span className="hero-enter inline-block" style={{ "--d": "420ms" }}>
+            <span className="text-gradient">{typed || "\u00a0"}</span>
+            <span className="caret text-accent-400" aria-hidden="true" />
+          </span>
         </h1>
 
         <p
-          className={`text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto mb-4 leading-relaxed ${step(2)}`}
-          style={{ transitionDelay: "220ms" }}
+          className="hero-enter text-lg sm:text-xl text-muted max-w-2xl mx-auto mb-4 leading-relaxed"
+          style={{ "--d": "560ms" }}
         >
           {t("hero.introBefore")}{" "}
-          <span className="text-white font-medium">{t("hero.name")}</span>
+          <span className="text-fg font-medium">{t("hero.name")}</span>
           {t("hero.introAfter")}
         </p>
 
         <p
-          className={`text-sm font-mono text-slate-600 mb-10 ${step(3)}`}
-          style={{ transitionDelay: "280ms" }}
+          className="hero-enter text-sm font-mono text-faint mb-10"
+          style={{ "--d": "660ms" }}
         >
           {t("hero.stack")}
         </p>
 
         <div
-          className={`flex flex-col sm:flex-row gap-4 justify-center ${step(4)}`}
-          style={{ transitionDelay: "360ms" }}
+          className="hero-enter flex flex-col sm:flex-row gap-4 justify-center items-center"
+          style={{ "--d": "760ms" }}
         >
-          <a
-            href="#contact"
-            className="group px-8 py-3.5 rounded-lg bg-accent-500 hover:bg-accent-400 text-white font-medium transition-all duration-200 hover:shadow-[0_0_40px_rgb(var(--accent-rgb)/0.35)]"
-          >
-            {t("hero.ctaPrimary")}
-            <span className="inline-block ml-2 transition-transform duration-200 group-hover:translate-x-1">
-              &rarr;
-            </span>
-          </a>
-          <a
-            href="#projects"
-            className="px-8 py-3.5 rounded-lg border border-white/[0.1] text-slate-300 hover:text-white hover:border-white/[0.2] hover:bg-white/[0.03] font-medium transition-all duration-200"
-          >
-            {t("hero.ctaSecondary")}
-          </a>
+          <Magnetic>
+            <a
+              href="#contact"
+              className="group relative overflow-hidden px-8 py-3.5 rounded-full bg-fg text-canvas font-medium transition-shadow duration-300 hover:shadow-[0_12px_40px_-8px_rgb(var(--accent-rgb)/0.6)]"
+            >
+              <span
+                aria-hidden="true"
+                className="absolute inset-0 bg-accent-500 translate-y-full rounded-full transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0 group-hover:rounded-none"
+              />
+              <span className="relative group-hover:text-white transition-colors duration-300">
+                {t("hero.ctaPrimary")}
+                <span className="inline-block ml-2 transition-transform duration-300 group-hover:translate-x-1">
+                  &rarr;
+                </span>
+              </span>
+            </a>
+          </Magnetic>
+          <Magnetic>
+            <a
+              href="#projects"
+              className="px-8 py-3.5 rounded-full border border-line-strong text-fg-soft hover:text-fg hover:border-fg/40 bg-canvas/40 backdrop-blur-sm font-medium transition-all duration-300"
+            >
+              {t("hero.ctaSecondary")}
+            </a>
+          </Magnetic>
         </div>
       </div>
 
       <div
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce"
+        className="hero-enter absolute bottom-10 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-2"
+        style={{ "--d": "1000ms" }}
         aria-hidden="true"
       >
-        <svg
-          className="w-5 h-5 text-slate-600"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={1.5}
-            d="M19 14l-7 7m0 0l-7-7m7 7V3"
-          />
-        </svg>
+        <div className="scroll-cue" />
       </div>
     </section>
   );

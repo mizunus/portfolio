@@ -2,7 +2,7 @@ const zh = {
   nav: {
     about: "关于我", experience: "经历", skills: "技能",
     projects: "项目", contact: "联系", cta: "联系我",
-    menuOpen: "打开菜单", menuClose: "关闭菜单", language: "切换语言",
+    menuOpen: "打开菜单", menuClose: "关闭菜单", language: "切换语言", theme: "切换明暗主题",
   },
   hero: {
     badge: "可承接外包与技术咨询",
@@ -75,7 +75,7 @@ const zh = {
     label: "项目", title: "我做过的东西",
     blurb:
       "我在 Saara 交付的电商平台，以及持续进行中的个人项目实验场。大多数都在线上——点进去试试看。",
-    featured: "精选", sunsetted: "已停止运营", previously: "过往产品",
+    featured: "精选", sunsetted: "已停止运营", visit: "访问", previously: "过往产品",
     roles: {
       flyos: "负责人 — 架构与智能体设计",
       commerceos: "负责人 — 设计并构建统一平台",
@@ -113,7 +113,7 @@ const zh = {
     errorSuffix: "你也可以直接发邮件给我：",
     emailMe: "给我发邮件",
   },
-  footer: { rights: "保留所有权利。" },
+  footer: { rights: "保留所有权利。", top: "返回顶部" },
 };
 
 export default zh;

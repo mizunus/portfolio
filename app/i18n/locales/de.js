@@ -2,7 +2,7 @@ const de = {
   nav: {
     about: "Über mich", experience: "Erfahrung", skills: "Fähigkeiten",
     projects: "Projekte", contact: "Kontakt", cta: "Kontakt aufnehmen",
-    menuOpen: "Menü öffnen", menuClose: "Menü schließen", language: "Sprache wechseln",
+    menuOpen: "Menü öffnen", menuClose: "Menü schließen", language: "Sprache wechseln", theme: "Hell/Dunkel umschalten",
   },
   hero: {
     badge: "Offen für Freelance & Beratung",
@@ -75,7 +75,7 @@ const de = {
     label: "Projekte", title: "Was ich gebaut habe",
     blurb:
       "Commerce-Plattformen, die ich bei Saara ausgeliefert habe, dazu ein laufendes Labor an Nebenprojekten. Die meisten sind live — einfach anklicken und ausprobieren.",
-    featured: "Hervorgehoben", sunsetted: "Eingestellt", previously: "Früher ausgeliefert",
+    featured: "Hervorgehoben", sunsetted: "Eingestellt", visit: "Öffnen", previously: "Früher ausgeliefert",
     roles: {
       flyos: "Lead — Architektur & Agenten-Design",
       commerceos: "Lead — Konzeption und Umsetzung der vereinheitlichten Plattform",
@@ -113,7 +113,7 @@ const de = {
     errorSuffix: "Sie können mir auch direkt schreiben an",
     emailMe: "Schreiben Sie mir",
   },
-  footer: { rights: "Alle Rechte vorbehalten." },
+  footer: { rights: "Alle Rechte vorbehalten.", top: "Nach oben" },
 };
 
 export default de;

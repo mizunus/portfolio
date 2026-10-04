@@ -9,6 +9,7 @@ const en = {
     menuOpen: "Open menu",
     menuClose: "Close menu",
     language: "Change language",
+    theme: "Toggle light/dark theme",
   },
   hero: {
     badge: "Open to freelance & consulting",
@@ -96,6 +97,7 @@ const en = {
       "Commerce platforms I've shipped at Saara, plus a running lab of side projects. Most of these are live — click through and try them.",
     featured: "Featured",
     sunsetted: "Sunsetted",
+    visit: "Visit",
     previously: "Previously Shipped",
     roles: {
       flyos: "Lead — architecture & agent design",
@@ -154,6 +156,7 @@ const en = {
   },
   footer: {
     rights: "All rights reserved.",
+    top: "Back to top",
   },
 };
 

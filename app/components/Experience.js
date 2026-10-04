@@ -1,72 +1,89 @@
 "use client";
-import { useInView } from "../hooks/useInView";
+import { useRef } from "react";
 import { useI18n } from "../i18n/LanguageProvider";
+import { clamp01, useScrollFrame } from "../hooks/useScrollFrame";
+import Reveal from "./motion/Reveal";
+import SplitText from "./motion/SplitText";
+import ScrambleText from "./motion/ScrambleText";
 
 export default function Experience() {
-  const [ref, inView] = useInView();
   const { t } = useI18n();
   const experiences = t("experience.entries");
+  const timelineRef = useRef(null);
+
+  // The rail fills as you read, and each role lights up as it crosses
+  // the reading line (60% down the viewport).
+  useScrollFrame(() => {
+    const el = timelineRef.current;
+    if (!el) return;
+    const line = window.innerHeight * 0.6;
+    const r = el.getBoundingClientRect();
+    el.style.setProperty("--tp", clamp01((line - r.top) / r.height).toFixed(4));
+    el.querySelectorAll("article").forEach((a) => {
+      // A data attribute, not a class: React owns className and would wipe it.
+      a.dataset.active = a.getBoundingClientRect().top < line ? "true" : "false";
+    });
+  });
 
   return (
     <section
       id="experience"
       aria-label="Work experience"
-      className="relative py-28 px-6 scroll-mt-24 border-y border-white/[0.06] bg-white/[0.015]"
-      ref={ref}
+      className="relative py-28 px-6 scroll-mt-24 border-y border-line bg-ink/[0.015]"
     >
-      <div
-        className={`max-w-6xl mx-auto transition-all duration-700 ease-out ${
-          inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-        }`}
-      >
-        <p className="text-sm font-mono text-accent-400 mb-3 tracking-wider uppercase">
-          {t("experience.label")}
-        </p>
-        <h2 className="text-3xl sm:text-4xl font-bold text-white mb-12">
-          {t("experience.title")}
-        </h2>
+      <div className="max-w-6xl mx-auto">
+        <ScrambleText
+          as="p"
+          text={t("experience.label")}
+          className="text-sm font-mono text-accent-400 mb-3 tracking-wider uppercase"
+        />
+        <SplitText
+          as="h2"
+          text={t("experience.title")}
+          className="text-3xl sm:text-5xl font-bold text-fg mb-14 tracking-tight"
+        />
 
-        <div className="space-y-12">
+        <div ref={timelineRef} className="relative space-y-14">
+          <div aria-hidden="true" className="absolute left-0 top-0 bottom-0 w-0.5 bg-line">
+            <div className="timeline__fill absolute inset-0" />
+          </div>
+
           {experiences.map((exp, idx) => (
-            <article
+            <Reveal
+              as="article"
               key={idx}
-              style={{ transitionDelay: `${idx * 90}ms` }}
-              className="group relative pl-8 border-l-2 border-white/[0.06] hover:border-accent-500/50 transition-colors duration-300"
+              variant="left"
+              delay={idx * 90}
+              className="group relative pl-10"
             >
-              <div
-                className={`absolute -left-[9px] top-1 w-4 h-4 rounded-full border-2 bg-[#0a0a0f] transition-colors duration-300 ${
-                  idx === 0
-                    ? "border-accent-400 shadow-[0_0_16px_rgb(var(--accent-rgb)/0.6)]"
-                    : "border-white/[0.08] group-hover:border-accent-400"
-                }`}
-              />
+              <div className="timeline__dot absolute -left-[7px] top-1.5 w-4 h-4 rounded-full border-2 border-line-strong bg-canvas" />
 
               <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-1">
-                <h3 className="text-xl font-semibold text-white">
+                <h3 className="text-xl sm:text-2xl font-semibold text-fg tracking-tight">
                   {exp.role}{" "}
-                  <span className="text-slate-500 font-normal">@ Saara Inc.</span>
+                  <span className="text-subtle font-normal">@ Saara Inc.</span>
                 </h3>
-                <time className="text-sm font-mono text-slate-500 shrink-0">
+                <time className="text-sm font-mono text-subtle shrink-0">
                   {exp.period}
                 </time>
               </div>
 
-              <p className="text-sm text-slate-500 mb-4">{exp.location}</p>
+              <p className="text-sm text-subtle mb-4">{exp.location}</p>
 
               <ul className="space-y-3">
                 {exp.bullets.map((item, i) => (
                   <li
                     key={i}
-                    className="text-slate-400 leading-relaxed flex gap-3"
+                    className="text-muted leading-relaxed flex gap-3 transition-transform duration-300 hover:translate-x-1"
                   >
-                    <span className="text-accent-400/50 mt-1 shrink-0" aria-hidden="true">
+                    <span className="text-accent-400/60 mt-1 shrink-0" aria-hidden="true">
                       ▹
                     </span>
                     <span>{item}</span>
                   </li>
                 ))}
               </ul>
-            </article>
+            </Reveal>
           ))}
         </div>
       </div>

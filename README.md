@@ -78,7 +78,7 @@ npm run deploy
 
 - **Framework** — Next.js 15 (App Router), static export
 - **UI** — React 19, Tailwind CSS 4
-- **Visuals** — CSS-only ambient gradients, film grain and cursor spotlights (no 3D or animation libraries)
+- **Visuals** — Light/dark themes (light by default), canvas dot field, scroll-linked reveals and Lenis smooth scrolling; all motion respects `prefers-reduced-motion`
 - **SEO** — `next-sitemap`, JSON-LD structured data, Open Graph metadata
 - **Hosting** — Cloudflare Workers static assets via Wrangler
 - **Linting** — ESLint with eslint-config-next

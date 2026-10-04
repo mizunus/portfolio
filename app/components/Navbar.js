@@ -1,10 +1,12 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import ScrollProgress from "./ScrollProgress";
 import LanguageSwitcher from "./LanguageSwitcher";
+import ThemeToggle from "./ThemeToggle";
 import { useI18n } from "../i18n/LanguageProvider";
+import { useScrollFrame } from "../hooks/useScrollFrame";
 
 const navLinks = [
   { key: "about", href: "#about" },
@@ -16,22 +18,60 @@ const navLinks = [
 export default function Navbar() {
   const { t } = useI18n();
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [active, setActive] = useState(null);
+  const [pill, setPill] = useState(null);
+  const lastY = useRef(0);
+  const linksRef = useRef(null);
 
+  // Tuck away while reading downward, slide back on any upward scroll.
+  useScrollFrame(() => {
+    const y = window.scrollY;
+    setScrolled(y > 20);
+    if (Math.abs(y - lastY.current) > 6) {
+      setHidden(y > lastY.current && y > 400);
+      lastY.current = y;
+    }
+  });
+
+  // Track which section sits under the middle of the viewport.
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const sections = navLinks
+      .map((l) => document.querySelector(l.href))
+      .filter(Boolean);
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) setActive(`#${e.target.id}`);
+        });
+      },
+      { rootMargin: "-50% 0px -50% 0px" }
+    );
+    sections.forEach((s) => io.observe(s));
+
+    const onTop = () => window.scrollY < window.innerHeight * 0.5 && setActive(null);
+    window.addEventListener("scroll", onTop, { passive: true });
+    return () => {
+      io.disconnect();
+      window.removeEventListener("scroll", onTop);
+    };
   }, []);
+
+  // Slide the highlight pill under the active link.
+  useEffect(() => {
+    const wrap = linksRef.current;
+    const el = active && wrap?.querySelector(`a[href="${active}"]`);
+    if (!el) return setPill(null);
+    setPill({ left: el.offsetLeft, width: el.offsetWidth });
+  }, [active, t]);
 
   return (
     <header
       role="banner"
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-[#0a0a0f]/80 backdrop-blur-xl border-b border-white/[0.06]"
-          : ""
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        hidden && !mobileOpen ? "-translate-y-full" : "translate-y-0"
+      } ${scrolled ? "bg-canvas/75 backdrop-blur-xl border-b border-line" : "border-b border-transparent"}`}
     >
       <nav
         aria-label="Primary navigation"
@@ -40,7 +80,7 @@ export default function Navbar() {
         <Link
           href="/"
           aria-label="Siddharth Dangarh - Home"
-          className="text-lg font-semibold text-white tracking-tight"
+          className="text-lg font-semibold text-fg tracking-tight transition-transform duration-500 hover:rotate-[-8deg] hover:scale-110"
         >
           <Image
             src="/images/portfolio-logo-icon.png"
@@ -52,12 +92,24 @@ export default function Navbar() {
           />
         </Link>
 
-        <div className="hidden md:flex items-center gap-8">
+        <div ref={linksRef} className="relative hidden md:flex items-center gap-1">
+          <span
+            aria-hidden="true"
+            className="absolute top-0 h-full rounded-full bg-ink/[0.06] border border-line transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+            style={{
+              left: pill?.left ?? 0,
+              width: pill?.width ?? 0,
+              opacity: pill ? 1 : 0,
+            }}
+          />
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="text-sm text-slate-400 hover:text-white transition-colors duration-200"
+              aria-current={active === link.href ? "true" : undefined}
+              className={`relative px-4 py-1.5 text-sm transition-colors duration-200 ${
+                active === link.href ? "text-fg" : "text-muted hover:text-fg"
+              }`}
             >
               {t(`nav.${link.key}`)}
             </a>
@@ -65,56 +117,58 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-1 md:gap-2">
+          <ThemeToggle label={t("nav.theme")} />
           <LanguageSwitcher />
 
           <a
             href="#contact"
-            className="hidden md:inline-flex px-4 py-2 rounded-lg bg-white/[0.04] border border-white/[0.1] text-sm text-slate-200 hover:bg-accent-500 hover:border-accent-400 hover:text-white transition-all duration-200"
+            className="hidden md:inline-flex px-4 py-2 rounded-full bg-fg text-canvas text-sm font-medium hover:bg-accent-500 hover:text-white transition-all duration-300"
           >
             {t("nav.cta")}
           </a>
 
           <button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden text-slate-400 hover:text-white transition-colors"
-          aria-label={mobileOpen ? t("nav.menuClose") : t("nav.menuOpen")}
-          aria-expanded={mobileOpen}
-        >
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="md:hidden p-1.5 text-muted hover:text-fg transition-colors"
+            aria-label={mobileOpen ? t("nav.menuClose") : t("nav.menuOpen")}
+            aria-expanded={mobileOpen}
           >
-            {mobileOpen ? (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1.5}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            ) : (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1.5}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            )}
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              {mobileOpen ? (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.5}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              ) : (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.5}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              )}
             </svg>
           </button>
         </div>
       </nav>
 
       {mobileOpen && (
-        <div className="md:hidden bg-[#0a0a0f]/95 backdrop-blur-xl border-b border-white/[0.06]">
+        <div className="md:hidden bg-canvas/95 backdrop-blur-xl border-b border-line">
           <nav aria-label="Mobile navigation" className="px-6 py-4 flex flex-col gap-4">
-            {navLinks.map((link) => (
+            {navLinks.map((link, i) => (
               <a
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className="text-sm text-slate-400 hover:text-white transition-colors"
+                className="hero-enter text-sm text-muted hover:text-fg transition-colors"
+                style={{ "--d": `${i * 50}ms`, "--intro-delay": "0s" }}
               >
                 {t(`nav.${link.key}`)}
               </a>
@@ -122,7 +176,7 @@ export default function Navbar() {
             <a
               href="#contact"
               onClick={() => setMobileOpen(false)}
-              className="mt-1 px-4 py-2.5 rounded-lg bg-accent-500 text-white text-sm font-medium text-center"
+              className="mt-1 px-4 py-2.5 rounded-full bg-accent-500 text-white text-sm font-medium text-center"
             >
               {t("nav.cta")}
             </a>

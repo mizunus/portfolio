@@ -7,7 +7,14 @@ import Projects from "./components/Projects";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import Ambient from "./components/Ambient";
+import Intro from "./components/Intro";
+import Marquee from "./components/motion/Marquee";
+import SmoothScroll from "./components/motion/SmoothScroll";
+import Cursor from "./components/motion/Cursor";
 import { LanguageProvider } from "./i18n/LanguageProvider";
+
+const STACK = ["Python", "Django", "Next.js", "React", "Node.js", "AWS", "Azure", "Postgres", "Redis", "LLMs"];
+const CRAFT = ["Commerce Platforms", "Agentic AI", "Cloud Architecture", "Systems That Ship"];
 
 function JsonLd() {
   const schema = {
@@ -83,12 +90,19 @@ function JsonLd() {
 export default function Home() {
   return (
     <LanguageProvider>
-      <div className="min-h-screen bg-[#0a0a0f] text-slate-200 overflow-x-hidden">
+      <div id="top" className="min-h-screen bg-canvas text-fg-soft overflow-x-clip">
       <JsonLd />
+      <Intro />
+      <SmoothScroll />
+      <Cursor />
       <Ambient />
       <Navbar />
       <main className="relative z-10">
         <Hero />
+        <div className="relative py-10 -rotate-2 scale-105 border-y border-line bg-canvas/60 backdrop-blur-sm">
+          <Marquee items={STACK} />
+          <Marquee items={CRAFT} reverse outline />
+        </div>
         <About />
         <Experience />
         <Skills />

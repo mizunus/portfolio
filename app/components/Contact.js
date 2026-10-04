@@ -1,7 +1,10 @@
 "use client";
 import { useState } from "react";
-import { useInView } from "../hooks/useInView";
 import { useI18n } from "../i18n/LanguageProvider";
+import Reveal from "./motion/Reveal";
+import SplitText from "./motion/SplitText";
+import ScrambleText from "./motion/ScrambleText";
+import Magnetic from "./motion/Magnetic";
 
 const EMAIL = "siddharthdangarh872@gmail.com";
 
@@ -12,7 +15,6 @@ const ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
 const INTENT_IDS = ["project", "role", "advice", "other"];
 
 export default function Contact() {
-  const [ref, inView] = useInView();
   const { t, locale } = useI18n();
   const [intent, setIntent] = useState("project");
   const [status, setStatus] = useState("idle"); // idle | sending | sent | error
@@ -49,47 +51,51 @@ export default function Contact() {
   }
 
   const field =
-    "w-full px-4 py-3 rounded-lg bg-white/[0.03] border border-white/[0.08] text-slate-200 placeholder:text-slate-600 focus:outline-none focus:border-accent-500/50 focus:bg-white/[0.05] transition-all duration-200";
+    "w-full px-4 py-3 rounded-xl bg-card border border-line text-fg-soft placeholder:text-faint focus:outline-none focus:border-accent-500/60 focus:bg-card-hover focus:shadow-[0_0_0_4px_rgb(var(--accent-rgb)/0.12)] transition-all duration-300";
 
   return (
     <section
       id="contact"
       aria-label="Contact"
-      className="relative py-24 px-6 scroll-mt-24"
-      ref={ref}
+      className="relative py-32 px-6 scroll-mt-24"
     >
-      <div
-        className={`max-w-2xl mx-auto transition-all duration-700 ease-out ${
-          inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-        }`}
-      >
+      <div className="max-w-2xl mx-auto">
         <div className="text-center">
-          <p className="text-sm font-mono text-accent-400 mb-3 tracking-wider uppercase">
-            Contact
-          </p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-            {t("contact.title")}
-          </h2>
-          <p className="text-slate-400 text-lg mb-10 leading-relaxed">{t("contact.blurb")}</p>
+          <ScrambleText
+            as="p"
+            text={t("contact.label")}
+            className="text-sm font-mono text-accent-400 mb-3 tracking-wider uppercase"
+          />
+          <SplitText
+            as="h2"
+            text={t("contact.title")}
+            className="text-4xl sm:text-6xl font-bold text-fg mb-5 tracking-tight"
+          />
+          <Reveal as="p" variant="blur" delay={150} className="text-muted text-lg mb-12 leading-relaxed">
+            {t("contact.blurb")}
+          </Reveal>
         </div>
+
+        <Reveal variant="up" delay={250}>
 
         {status === "sent" ? (
           <div
             role="status"
-            className="p-8 rounded-xl bg-emerald-400/[0.06] border border-emerald-400/20 text-center"
+            className="hero-enter p-8 rounded-2xl bg-emerald-500/[0.07] border border-emerald-500/25 text-center"
+            style={{ "--intro-delay": "0s" }}
           >
-            <div className="text-3xl mb-3" aria-hidden="true">
+            <div className="text-3xl mb-3 text-emerald-600 dark:text-emerald-400 animate-[spin_3s_linear_infinite] inline-block" aria-hidden="true">
               ✦
             </div>
-            <h3 className="text-xl font-semibold text-white mb-2">
+            <h3 className="text-xl font-semibold text-fg mb-2">
               {t("contact.sentTitle")}
             </h3>
-            <p className="text-slate-400">{t("contact.sentBody")}</p>
+            <p className="text-muted">{t("contact.sentBody")}</p>
           </div>
         ) : ACCESS_KEY ? (
           <form onSubmit={onSubmit} className="space-y-5">
             <fieldset>
-              <legend className="text-sm text-slate-400 mb-3">
+              <legend className="text-sm text-muted mb-3">
                 {t("contact.intentLegend")}
               </legend>
               <div className="flex flex-wrap gap-2">
@@ -99,10 +105,10 @@ export default function Contact() {
                     type="button"
                     onClick={() => setIntent(id)}
                     aria-pressed={intent === id}
-                    className={`px-4 py-2 rounded-lg text-sm border transition-all duration-200 ${
+                    className={`px-4 py-2 rounded-full text-sm border transition-all duration-300 active:scale-95 ${
                       intent === id
-                        ? "bg-accent-500/15 border-accent-400/40 text-accent-200"
-                        : "bg-white/[0.02] border-white/[0.08] text-slate-400 hover:text-white hover:border-white/[0.16]"
+                        ? "bg-accent-500 border-accent-500 text-white shadow-[0_8px_24px_-8px_rgb(var(--accent-rgb)/0.6)]"
+                        : "bg-card border-line text-muted hover:text-fg hover:border-line-strong"
                     }`}
                   >
                     {t(`contact.intents.${id}`)}
@@ -113,7 +119,7 @@ export default function Contact() {
 
             <div className="grid sm:grid-cols-2 gap-5">
               <div>
-                <label htmlFor="name" className="block text-sm text-slate-400 mb-2">
+                <label htmlFor="name" className="block text-sm text-muted mb-2">
                   {t("contact.name")}
                 </label>
                 <input
@@ -126,7 +132,7 @@ export default function Contact() {
                 />
               </div>
               <div>
-                <label htmlFor="email" className="block text-sm text-slate-400 mb-2">
+                <label htmlFor="email" className="block text-sm text-muted mb-2">
                   {t("contact.email")}
                 </label>
                 <input
@@ -142,7 +148,7 @@ export default function Contact() {
             </div>
 
             <div>
-              <label htmlFor="message" className="block text-sm text-slate-400 mb-2">
+              <label htmlFor="message" className="block text-sm text-muted mb-2">
                 {t("contact.message")}
               </label>
               <textarea
@@ -166,7 +172,7 @@ export default function Contact() {
             />
 
             {status === "error" && (
-              <p role="alert" className="text-sm text-rose-400">
+              <p role="alert" className="text-sm text-rose-600 dark:text-rose-400">
                 {error} {t("contact.errorSuffix")}{" "}
                 <a href={`mailto:${EMAIL}`} className="underline">
                   {EMAIL}
@@ -178,36 +184,39 @@ export default function Contact() {
             <button
               type="submit"
               disabled={status === "sending"}
-              className="w-full px-8 py-3.5 rounded-lg bg-accent-500 hover:bg-accent-400 disabled:opacity-60 disabled:cursor-not-allowed text-white font-medium transition-all duration-200 hover:shadow-[0_0_32px_rgb(var(--accent-rgb)/0.3)]"
+              className="w-full px-8 py-3.5 rounded-full bg-fg text-canvas hover:bg-accent-500 hover:text-white disabled:opacity-60 disabled:cursor-not-allowed font-medium transition-all duration-300 hover:shadow-[0_12px_40px_-8px_rgb(var(--accent-rgb)/0.6)] active:scale-[0.98]"
             >
               {status === "sending" ? t("contact.sending") : t("contact.send")}
             </button>
 
-            <p className="text-xs text-slate-600 text-center">{t("contact.privacy")}</p>
+            <p className="text-xs text-faint text-center">{t("contact.privacy")}</p>
           </form>
         ) : (
           <div className="text-center">
-            <a
-              href={`mailto:${EMAIL}`}
-              className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-lg bg-accent-500 hover:bg-accent-400 text-white font-medium transition-all duration-200 hover:shadow-[0_0_32px_rgb(var(--accent-rgb)/0.25)]"
-            >
-              {t("contact.emailMe")}
-            </a>
+            <Magnetic>
+              <a
+                href={`mailto:${EMAIL}`}
+                className="grid place-items-center w-40 h-40 rounded-full bg-fg text-canvas text-lg font-medium hover:bg-accent-500 hover:text-white hover:scale-105 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:shadow-[0_20px_60px_-10px_rgb(var(--accent-rgb)/0.6)]"
+              >
+                {t("contact.emailMe")} &rarr;
+              </a>
+            </Magnetic>
           </div>
         )}
+        </Reveal>
 
-        <div className="flex gap-8 justify-center text-sm mt-12">
+        <div className="flex gap-8 justify-center text-sm mt-14">
           <a
             href="https://in.linkedin.com/in/siddharth-dangarh-a896b61a7"
             target="_blank"
             rel="me noopener noreferrer"
-            className="text-slate-500 hover:text-accent-400 transition-colors duration-200"
+            className="text-subtle hover:text-accent-400 transition-colors duration-200"
           >
             LinkedIn
           </a>
           <a
             href={`mailto:${EMAIL}`}
-            className="text-slate-500 hover:text-accent-400 transition-colors duration-200"
+            className="text-subtle hover:text-accent-400 transition-colors duration-200"
           >
             Email
           </a>
@@ -215,7 +224,7 @@ export default function Contact() {
             href="https://discuvr.in"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-slate-500 hover:text-accent-400 transition-colors duration-200"
+            className="text-subtle hover:text-accent-400 transition-colors duration-200"
           >
             Discuvr
           </a>

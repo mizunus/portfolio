@@ -1,6 +1,9 @@
 "use client";
-import { useInView } from "../hooks/useInView";
 import { useI18n } from "../i18n/LanguageProvider";
+import Reveal from "./motion/Reveal";
+import SplitText from "./motion/SplitText";
+import ScrambleText from "./motion/ScrambleText";
+import Spotlight from "./Spotlight";
 
 const skillGroups = [
   ["Python", "JavaScript", "Django", "Next.js", "Node.js", "React"],
@@ -11,44 +14,50 @@ const skillGroups = [
 ];
 
 export default function Skills() {
-  const [ref, inView] = useInView();
   const { t } = useI18n();
   const categories = t("skills.categories");
 
   return (
-    <section id="skills" className="py-24 px-6 scroll-mt-24" ref={ref}>
-      <div
-        className={`max-w-6xl mx-auto transition-all duration-700 ease-out ${
-          inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-        }`}
-      >
-        <p className="text-sm font-mono text-accent-400 mb-3 tracking-wider uppercase">
-          {t("skills.label")}
-        </p>
-        <h2 className="text-3xl sm:text-4xl font-bold text-white mb-12">
-          {t("skills.title")}
-        </h2>
+    <section id="skills" className="py-28 px-6 scroll-mt-24">
+      <div className="max-w-6xl mx-auto">
+        <ScrambleText
+          as="p"
+          text={t("skills.label")}
+          className="text-sm font-mono text-accent-400 mb-3 tracking-wider uppercase"
+        />
+        <SplitText
+          as="h2"
+          text={t("skills.title")}
+          className="text-3xl sm:text-5xl font-bold text-fg mb-14 tracking-tight"
+        />
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {skillGroups.map((skills, idx) => (
-            <div
-              key={idx}
-              className="p-6 rounded-xl bg-white/[0.02] border border-white/[0.06] hover:border-accent-500/20 transition-all duration-300"
-            >
-              <h3 className="text-sm font-mono text-accent-400 mb-4 tracking-wider uppercase">
-                {categories[idx]}
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {skills.map((skill) => (
-                  <span
-                    key={skill}
-                    className="px-3 py-1.5 text-sm text-slate-300 bg-white/[0.04] rounded-md border border-white/[0.06] hover:border-accent-500/30 hover:text-white transition-all duration-200"
-                  >
-                    {skill}
+            <Reveal key={idx} variant="clip" delay={idx * 90} className="rounded-2xl">
+              <Spotlight className="h-full p-6 rounded-2xl bg-card border border-line hover:border-accent-500/30 backdrop-blur-sm">
+                <div className="flex items-baseline justify-between mb-5">
+                  <h3 className="text-sm font-mono text-accent-400 tracking-wider uppercase">
+                    {categories[idx]}
+                  </h3>
+                  <span className="text-xs font-mono text-faint">
+                    {String(idx + 1).padStart(2, "0")}
                   </span>
-                ))}
-              </div>
-            </div>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {skills.map((skill, i) => (
+                    <span
+                      key={skill}
+                      className="reveal-child inline-flex"
+                      style={{ "--d": `${idx * 90 + 300 + i * 45}ms` }}
+                    >
+                      <span className="px-3 py-1.5 text-sm text-fg-soft bg-ink/[0.04] rounded-full border border-line hover:border-accent-500/40 hover:text-accent-400 hover:-translate-y-0.5 transition-all duration-200">
+                        {skill}
+                      </span>
+                    </span>
+                  ))}
+                </div>
+              </Spotlight>
+            </Reveal>
           ))}
         </div>
       </div>

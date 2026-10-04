@@ -2,7 +2,7 @@ const es = {
   nav: {
     about: "Sobre mí", experience: "Experiencia", skills: "Habilidades",
     projects: "Proyectos", contact: "Contacto", cta: "Hablemos",
-    menuOpen: "Abrir menú", menuClose: "Cerrar menú", language: "Cambiar idioma",
+    menuOpen: "Abrir menú", menuClose: "Cerrar menú", language: "Cambiar idioma", theme: "Cambiar tema claro/oscuro",
   },
   hero: {
     badge: "Disponible para proyectos y consultoría",
@@ -75,7 +75,7 @@ const es = {
     label: "Proyectos", title: "Cosas que he construido",
     blurb:
       "Plataformas de comercio que he lanzado en Saara, más un laboratorio continuo de proyectos personales. La mayoría están en vivo — entra y pruébalas.",
-    featured: "Destacado", sunsetted: "Descontinuado", previously: "Lanzados anteriormente",
+    featured: "Destacado", sunsetted: "Descontinuado", visit: "Visitar", previously: "Lanzados anteriormente",
     roles: {
       flyos: "Lead — arquitectura y diseño de agentes",
       commerceos: "Lead — diseñé y construí la plataforma unificada",
@@ -113,7 +113,7 @@ const es = {
     errorSuffix: "También puedes escribirme directamente a",
     emailMe: "Escríbeme",
   },
-  footer: { rights: "Todos los derechos reservados." },
+  footer: { rights: "Todos los derechos reservados.", top: "Volver arriba" },
 };
 
 export default es;

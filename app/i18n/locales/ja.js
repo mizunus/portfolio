@@ -2,7 +2,7 @@ const ja = {
   nav: {
     about: "自己紹介", experience: "経歴", skills: "スキル",
     projects: "プロジェクト", contact: "お問い合わせ", cta: "連絡する",
-    menuOpen: "メニューを開く", menuClose: "メニューを閉じる", language: "言語を変更",
+    menuOpen: "メニューを開く", menuClose: "メニューを閉じる", language: "言語を変更", theme: "ライト/ダーク切替",
   },
   hero: {
     badge: "フリーランス・技術顧問のご相談を受付中",
@@ -75,7 +75,7 @@ const ja = {
     label: "プロジェクト", title: "つくってきたもの",
     blurb:
       "Saara でリリースしたコマースプラットフォームと、継続中の個人プロジェクトの数々です。ほとんどは公開中なので、ぜひ触ってみてください。",
-    featured: "注目", sunsetted: "提供終了", previously: "過去のプロダクト",
+    featured: "注目", sunsetted: "提供終了", visit: "開く", previously: "過去のプロダクト",
     roles: {
       flyos: "リード — アーキテクチャとエージェント設計",
       commerceos: "リード — 統合プラットフォームの設計と実装",
@@ -113,7 +113,7 @@ const ja = {
     errorSuffix: "こちらに直接メールしていただいても構いません：",
     emailMe: "メールを送る",
   },
-  footer: { rights: "All rights reserved." },
+  footer: { rights: "All rights reserved.", top: "トップへ" },
 };
 
 export default ja;
