@@ -61,7 +61,7 @@ export default function Experience() {
               <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-1">
                 <h3 className="text-xl sm:text-2xl font-semibold text-fg tracking-tight">
                   {exp.role}{" "}
-                  <span className="text-subtle font-normal">@ Saara Inc.</span>
+                  <span className="text-subtle font-normal">@ {exp.company ?? "Saara Inc."}</span>
                 </h3>
                 <time className="text-sm font-mono text-subtle shrink-0">
                   {exp.period}
